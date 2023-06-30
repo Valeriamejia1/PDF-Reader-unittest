@@ -6,7 +6,7 @@ class TestExcel(unittest.TestCase):
     def testCase1(self):
 
         # Lee el archivo de Excel y selecciona el sheet "OutputData"
-        data_frame = pd.read_excel("OutputAPI.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
         # Obtiene la columna deseada
         columna = data_frame["PAYCODE"]
