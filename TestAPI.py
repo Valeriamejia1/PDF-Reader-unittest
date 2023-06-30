@@ -52,7 +52,7 @@ class TestExcel(unittest.TestCase):
         valores_esperados = ["SCHED"]
 
         for valor in columna:
-            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODEen el File TMMC")
+            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE en el File TMMC")
 
 
 if __name__ == '__main__':
