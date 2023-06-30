@@ -35,7 +35,24 @@ class TestExcel(unittest.TestCase):
         valores_esperados = ["SCHED"]
 
         for valor in columna:
-            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODEen el File DELTA")
+            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE en el File DELTA")
+    
+    def testCase3(self):
+
+        #Description TestCase: Remove SCHED shifts when is neccesary
+        #File: TMMC
+
+        # Lee el archivo de Excel y selecciona el sheet "OutputData"
+        data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
+
+        # Obtiene la columna deseada
+        columna = data_frame["PAYCODE"]
+
+        # Verifica los valores esperados
+        valores_esperados = ["SCHED"]
+
+        for valor in columna:
+            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODEen el File TMMC")
 
 
 if __name__ == '__main__':
