@@ -8,13 +8,13 @@ class TestExcel(unittest.TestCase):
         #Description TestCase: Output Data Should remove shifts with Paycode LCUP, SHDIF and LUNCH
         #File: TMMC
 
-        # Lee el archivo de Excel y selecciona el sheet "OutputData"
+        # Reade Excel file and select the sheet "OutputData"
         data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
-        # Obtiene la columna deseada
+        # Obtain the column 
         Column = data_frame["PAYCODE"]
 
-        # Verifica los valores esperados
+        # Checked the expected Values
         expectedValues = ["LUNCH", "LCUP", "SHDIF"]
 
         missingValues = []
