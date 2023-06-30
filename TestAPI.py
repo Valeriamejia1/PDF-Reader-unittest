@@ -12,48 +12,61 @@ class TestExcel(unittest.TestCase):
         data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
         # Obtiene la columna deseada
-        columna = data_frame["PAYCODE"]
+        Column = data_frame["PAYCODE"]
 
         # Verifica los valores esperados
-        valores_esperados = ["LUNCH", "LCUP", "SHDIF"]
+        expectedValues = ["LUNCH", "LCUP", "SHDIF"]
 
-        for valor in columna:
-            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE en el File TMMC")
+        missingValues = []
+
+        #if an expected value is not found in column.values, it is added to the missing_values list.
+        for value in expectedValues:
+            if value in Column.values:
+                missingValues.append(value)
+        self.assertNotIn(missingValues, f"The following values are not present in the PAYCODE column in Excel TMMC file: {missingValues}")
 
     def testCase2(self):
 
         #Description TestCase: Remove SCHED shifts when is neccesary
         #File: DELTA
 
-        # Lee el archivo de Excel y selecciona el sheet "OutputData"
         data_frame = pd.read_excel("Delta Health 4.15.23.xlsx", sheet_name="OutputData")
 
-        # Obtiene la columna deseada
-        columna = data_frame["PAYCODE"]
+        column = data_frame["PAYCODE"]
 
-        # Verifica los valores esperados
-        valores_esperados = ["SCHED"]
+        expectedValues = ["SCHED"]
 
-        for valor in columna:
-            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE en el File DELTA")
+        for value in column:
+            self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the DELTA file.")
     
     def testCase3(self):
 
         #Description TestCase: Remove SCHED shifts when is neccesary
         #File: TMMC
-
-        # Lee el archivo de Excel y selecciona el sheet "OutputData"
         data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
-        # Obtiene la columna deseada
-        columna = data_frame["PAYCODE"]
+        Column = data_frame["PAYCODE"]
 
-        # Verifica los valores esperados
-        valores_esperados = ["SCHED"]
+        expectedValues = ["SCHED"]
 
-        for valor in columna:
-            self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE en el File TMMC")
+        for value in Column:
+            self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the TMMC file.")
 
+    
+    def testCase7(self):
+        #Validate Output has all nurses
+        #File: DELTA modified
+        data_frame = pd.read_excel("Delta Health 4.15.23.xlsx", sheet_name="OutputData")
+        Column = data_frame["NAME"]
+        expectedValues = ["Hunter, Angelique","Halums, Brittney","Cross, Destin","Radford, Gladys","Hale, Shannon","Kelly, Joby", "Lowe, Sherrie", "Lewis, Susan", "Towery, Brittany"]
+        #Added a missing_values list to store the values that were not found in the "NAME" column.
+        missingValues = []
+
+        #if an expected value is not found in column.values, it is added to the missing_values list.
+        for value in expectedValues:
+            if value not in Column.values:
+                missingValues.append(value)
+        self.assertFalse(missingValues, f"The following values are not present in the NAME column in Excel Delta file: {missingValues}")
 
 if __name__ == '__main__':
     unittest.main()
