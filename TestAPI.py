@@ -12,7 +12,7 @@ class TestExcel(unittest.TestCase):
         columna = data_frame["PAYCODE"]
 
         # Verifica los valores esperados
-        valores_esperados = ["LUNCH", "LCUP"]
+        valores_esperados = ["REG", "LCUP"]
 
         for valor in columna:
             self.assertNotIn(valor, valores_esperados, f"El valor '{valor}' está presente en la columna PAYCODE")
