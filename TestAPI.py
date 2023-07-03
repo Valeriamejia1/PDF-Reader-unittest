@@ -24,7 +24,7 @@ class TestExcel(unittest.TestCase):
         for value in expectedValues:
             if value in Column.values:
                 missingValues.append(value)
-        self.assertNotIn(missingValues, f"The following values are not present in the PAYCODE column in Excel TMMC file: {missingValues}")
+        self.assertListEqual(missingValues, [], f"The following values are not present in the PAYCODE column in Excel TMMC file: {missingValues}")
 
     def testCase2(self):
 
