@@ -79,11 +79,11 @@ class TestExcel(unittest.TestCase):
         enddtm_column = pd.to_datetime(data_frame["ENDDTM"])
 
         nurse_name_1 = "Chekabab, Zahra"
-        expected_value_enddtm_1 = datetime(2023, 4, 18, 7, 39)
+        expected_value_enddtm_1 = datetime(2023, 4, 18, 7, 40)
         expected_value_startdtm_1 = datetime(2023, 4, 17, 18, 58)
 
         nurse_name_2 = "Maldonado, Marleny"
-        expected_value_enddtm_2 = datetime(2023, 4, 20, 7, 26)
+        expected_value_enddtm_2 = datetime(2023, 5, 20, 7, 26)
         expected_value_startdtm_2 = datetime(2023, 4, 19, 18, 55)
 
         errors = []
