@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from datetime import datetime
+import numpy as np
 
 class TestExcel(unittest.TestCase):
 
@@ -57,7 +57,7 @@ class TestExcel(unittest.TestCase):
     def testCase7(self):
         #Validate Output has all nurses
         #File: DELTA modified
-        data_frame = pd.read_excel("Delta Health 4.15.23.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("Delta Health 4.15.23 SCHED.xlsx", sheet_name="OutputData")
         Column = data_frame["NAME"]
         expectedValues = ["Hunter, Angelique","Halums, Brittney","Cross, Destin","Radford, Gladys","Hale, Shannon","Kelly, Joby", "Lowe, Sherrie", "Lewis, Susan", "Towery, Brittany"]
         #Added a missing_values list to store the values that were not found in the "NAME" column.
@@ -69,48 +69,45 @@ class TestExcel(unittest.TestCase):
                 missingValues.append(value)
         self.assertFalse(missingValues, f"The following values are not present in the NAME column in Excel Delta file: {missingValues}")
 
-    def testCase9(self):
-        # Validate Output Out time from TMMC as it takes the out time
-        # Archivo: TMMC
-        data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
+    def testcase9(self):
+        #Validate Output Out time from TMMC as it takes the out time
+        #File: TMMC WITH SCHED
 
-        nurse_column = data_frame["NAME"]
-        startdtm_column = pd.to_datetime(data_frame["STARTDTM"])
-        enddtm_column = pd.to_datetime(data_frame["ENDDTM"])
+        # Upload Excel file
+        df = pd.read_excel("TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
 
-        nurse_name_1 = "Chekabab, Zahra"
-        expected_value_enddtm_1 = datetime(2023, 4, 18, 7, 39)
-        expected_value_startdtm_1 = datetime(2023, 4, 17, 18, 58)
+        # Format the date and time columns to match the expected format.
+        df["STARTDTM"] = pd.to_datetime(df["STARTDTM"], format="%m/%d/%Y %H:%M")
+        df["ENDDTM"] = pd.to_datetime(df["ENDDTM"], format="%m/%d/%Y %H:%M")
+        
+        # Validate data for the nurse "Chekabab, Zahra"
+        nurse_name = "Chekabab, Zahra"
+        
+        nurse_data = df[df["NAME"] == nurse_name]
+        expected_data = [
+            ("REG", pd.to_datetime("2023-04-17 18:58:00"), pd.to_datetime("2023-04-18 07:39:00")),
+            ("SCHED", pd.to_datetime("2023-04-18 19:01:00"), pd.to_datetime("2023-04-19 07:34:00"))
+        ]
+        
+        for expected_paycode, expected_startdtm, expected_enddtm in expected_data:
+            self.assertTrue(any((nurse_data["PAYCODE"] == expected_paycode) & (nurse_data["STARTDTM"] == expected_startdtm) & (nurse_data["ENDDTM"] == expected_enddtm)), f"No se encontró la línea con los valores esperados para {nurse_name} - PAYCODE: {expected_paycode}, STARTDTM: {expected_startdtm}, ENDDTM: {expected_enddtm}")
+        
+        # Validate data for the nurse "Maldonado, Marleny".
+        nurse_name = "Maldonado, Marleny"
+        
+        nurse_data = df[df["NAME"] == nurse_name]
+        expected_data = [
+            ("REG", pd.to_datetime("2023-04-19 18:55:00"), pd.to_datetime("2023-04-20 07:26:00")),
+            ("SCHED", pd.to_datetime("2023-04-24 19:00:00"), np.nan)
+        ]
+        
+        for expected_paycode, expected_startdtm, expected_enddtm in expected_data:
+            if pd.isnull(expected_enddtm):
+                self.assertTrue(any((nurse_data["PAYCODE"] == expected_paycode) & (nurse_data["STARTDTM"] == expected_startdtm) & pd.isnull(nurse_data["ENDDTM"])), f"The line with the expected values was not found for {nurse_name} - PAYCODE: {expected_paycode}, STARTDTM: {expected_startdtm}, ENDDTM: NaN")
+            else:
+                self.assertTrue(any((nurse_data["PAYCODE"] == expected_paycode) & (nurse_data["STARTDTM"] == expected_startdtm) & (nurse_data["ENDDTM"] == expected_enddtm)), f"The line with the expected values was not found for {nurse_name} - PAYCODE: {expected_paycode}, STARTDTM: {expected_startdtm}, ENDDTM: {expected_enddtm}")
 
-        nurse_name_2 = "Maldonado, Marleny"
-        expected_value_enddtm_2 = datetime(2023, 4, 20, 7, 26)
-        expected_value_startdtm_2 = datetime(2023, 4, 19, 18, 55)
 
-        errors = []
-
-        found_nurse_1 = False
-        found_nurse_2 = False
-
-        for nurse, startdtm, enddtm in zip(nurse_column, startdtm_column, enddtm_column):
-            if not found_nurse_1 and nurse == nurse_name_1:
-                if enddtm != expected_value_enddtm_1:
-                    errors.append(f"The value '{expected_value_enddtm_1}' is not present in ENDDTM for the nurse '{nurse_name_1}' in the TMM file.")
-                if startdtm != expected_value_startdtm_1:
-                    errors.append(f"The value '{expected_value_startdtm_1}' is not present in STARTDTM for the nurse '{nurse_name_1}' in the TMM file.")
-                found_nurse_1 = True
-
-            if not found_nurse_2 and nurse == nurse_name_2:
-                if enddtm != expected_value_enddtm_2:
-                    errors.append(f"The value '{expected_value_enddtm_2}' is not present in ENDDTM for the nurse '{nurse_name_2}' in the TMM file.")
-                if startdtm != expected_value_startdtm_2:
-                    errors.append(f"The value '{expected_value_startdtm_2}' is not present in STARTDTM for the nurse '{nurse_name_2}' in the TMM file.")
-                found_nurse_2 = True
-
-            if found_nurse_1 and found_nurse_2:
-                break
-
-        if errors:
-            self.fail("\n".join(errors))
 
 if __name__ == '__main__':
     unittest.main()
