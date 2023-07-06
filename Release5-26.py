@@ -2,7 +2,10 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
-    def test_search_in_excel(self):
+    def testCase1(self):
+
+    #Check last shift is present
+    #File: Hannibal
         # Upload Excel file
         excel_file = 'Hannibal 4.15.23 SCHED.xlsx'
         df = pd.read_excel(excel_file, sheet_name='OutputData')
