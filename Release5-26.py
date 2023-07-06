@@ -30,7 +30,7 @@ class ExcelTest(unittest.TestCase):
                             f"Hours: {hours}\n"
             self.fail(error_message)
         else:
-            self.assertEqual(len(filtered_df), 1, 'Se encontraron múltiples coincidencias en el archivo Excel.')
+            self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
 if __name__ == '__main__':
     unittest.main()
