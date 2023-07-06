@@ -36,13 +36,38 @@ class ExcelTest(unittest.TestCase):
         else:
             self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
-
     def testCase3(self):
+
+        #Check Exe has the same data as last commit
+        #File: TMMC WITHOUT SCHED
+
+        # Loads the Excel file in a DataFrame
+        df = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
+        
+        # Verify the number of rows
+        self.assertEqual(len(df), 655-1, "El número de filas no es igual a 1310")
+        
+        # Verify the existence of the column "NAME".
+        self.assertIn("NAME", df.columns, "No se encontró la columna 'NAME'")
+        
+        # Gets the values of the column "NAME".
+        names = df["NAME"]
+        
+        # Verify the values in the first and last row
+        self.assertEqual(names.iloc[0], "Jo, Ahra", "The value in the first row of 'NAME' is not 'Jo, Ahra'.")
+        self.assertEqual(names.iloc[-1], "Chekabab, Zahra", "The value in the last row of 'NAME' is not 'Chekabab, Zahra'.")
+
+
+    def testCase3SCHED(self):
+
+        #Check Exe has the same data as last commit
+        #File: TMMC WITH SCHED
+
         # Loads the Excel file in a DataFrame
         df = pd.read_excel("TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
         
         # Verify the number of rows
-        self.assertEqual(len(df), 1309, "El número de filas no es igual a 1310")
+        self.assertEqual(len(df), 1310-1, "El número de filas no es igual a 1310")
         
         # Verify the existence of the column "NAME".
         self.assertIn("NAME", df.columns, "No se encontró la columna 'NAME'")
@@ -53,6 +78,8 @@ class ExcelTest(unittest.TestCase):
         # Verify the values in the first and last row
         self.assertEqual(names.iloc[0], "Yu, Ace", "The value in the first row of 'NAME' is not 'Yu, Ace'.")
         self.assertEqual(names.iloc[-1], "Chekabab, Zahra", "The value in the last row of 'NAME' is not 'Chekabab, Zahra'.")
+
+    
         
 if __name__ == '__main__':
     unittest.main()
