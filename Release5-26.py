@@ -6,6 +6,7 @@ class ExcelTest(unittest.TestCase):
 
     #Check last shift is present
     #File: Hannibal
+
         # Upload Excel file
         excel_file = 'Hannibal 4.15.23 SCHED.xlsx'
         df = pd.read_excel(excel_file, sheet_name='OutputData')
@@ -35,5 +36,25 @@ class ExcelTest(unittest.TestCase):
         else:
             self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
+
+    def testCase3(self):
+        # Loads the Excel file in a DataFrame
+        df = pd.read_excel("TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
+        
+        # Verify the number of rows
+        self.assertEqual(len(df), 1309, "El número de filas no es igual a 1310")
+        
+        # Verify the existence of the column "NAME".
+        self.assertIn("NAME", df.columns, "No se encontró la columna 'NAME'")
+        
+        # Gets the values of the column "NAME".
+        names = df["NAME"]
+        
+        # Verify the values in the first and last row
+        self.assertEqual(names.iloc[0], "Yu, Ace", "The value in the first row of 'NAME' is not 'Yu, Ace'.")
+        self.assertEqual(names.iloc[-1], "Chekabab, Zahra", "The value in the last row of 'NAME' is not 'Chekabab, Zahra'.")
+        
 if __name__ == '__main__':
     unittest.main()
+
+
