@@ -4,7 +4,7 @@ import pandas as pd
 class ExcelTest(unittest.TestCase):
     def testCase1(self):
 
-    #Check last shift is present
+    #Descrition: Check last shift is present
     #File: Hannibal
 
         # Upload Excel file
@@ -38,7 +38,7 @@ class ExcelTest(unittest.TestCase):
 
     def testCase3(self):
 
-        #Check Exe has the same data as last commit
+        #Descrition: Check Exe has the same data as last commit
         #File: TMMC WITHOUT SCHED
 
         # Loads the Excel file in a DataFrame
@@ -60,7 +60,7 @@ class ExcelTest(unittest.TestCase):
 
     def testCase3SCHED(self):
 
-        #Check Exe has the same data as last commit
+        #Descrition: Check Exe has the same data as last commit
         #File: TMMC WITH SCHED
 
         # Loads the Excel file in a DataFrame

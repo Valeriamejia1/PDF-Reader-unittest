@@ -2,6 +2,11 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
+
+        #Descrition: Compare original files with new file versions of the same PDF file
+        #Files: Test Dawson, Kathleen //  Mattox, Kyle  // Hannibal 4.15.23
+
+
     def compare_excel_files(self, original_file, new_file):
         # Loads the original Excel file in a DataFrame
         original_df = pd.read_excel(original_file, sheet_name="OutputData")

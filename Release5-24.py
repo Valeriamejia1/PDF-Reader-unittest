@@ -55,7 +55,8 @@ class TestExcel(unittest.TestCase):
 
     
     def testCase7(self):
-        #Validate Output has all nurses
+
+        #Descrition: Validate Output has all nurses
         #File: DELTA modified
         data_frame = pd.read_excel("Delta Health 4.15.23 SCHED.xlsx", sheet_name="OutputData")
         Column = data_frame["NAME"]
@@ -70,7 +71,7 @@ class TestExcel(unittest.TestCase):
         self.assertFalse(missingValues, f"The following values are not present in the NAME column in Excel Delta file: {missingValues}")
 
     def testcase9(self):
-        # Validate Output Out time from TMMC as it takes the out time
+        # Description: Validate Output Out time from TMMC as it takes the out time
         # File: TMMC WITH SCHED
 
         # Upload Excel file
@@ -119,7 +120,7 @@ class TestExcel(unittest.TestCase):
         self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
 
     def testcase10(self):
-        # Check RAW data Out has the same hour as output
+        # Descrition: Check RAW data Out has the same hour as output
         # File: TMMC WITH SCHED
 
         # Upload Excel file
