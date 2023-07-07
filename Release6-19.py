@@ -16,7 +16,10 @@ class ExcelTest(unittest.TestCase):
         )
 
     def generate_difference_message(self, original_df, new_df, original_file, new_file):
-        diff_df = original_df.ne(new_df)
+        original_df = original_df.fillna("NA")
+        new_df = new_df.fillna("NA")
+
+        diff_df = original_df != new_df
         diff_indices = diff_df.any(axis=1)
 
         diff_message = f"Differences found between {original_file} and {new_file}:\n"
@@ -24,9 +27,12 @@ class ExcelTest(unittest.TestCase):
             diff_message += f"Row {index+2}:\n"
             for column, value in row.items():
                 if value:
-                    diff_message += f"  - Column '{column}': Original='{original_df.at[index, column]}', New='{new_df.at[index, column]}'\n"
+                    original_value = original_df.at[index, column]
+                    new_value = new_df.at[index, column]
+                    diff_message += f"  - Column '{column}': Original='{original_value}', New='{new_value}'\n"
 
         return diff_message
+
 
     def testDawsonKathleen(self):
         self.compare_excel_files("Dawson, Kathleen ORIG.xlsx", "Dawson, Kathleen.xlsx")
