@@ -3,35 +3,30 @@ import pandas as pd
 
 class ExcelTest(unittest.TestCase):
     def compare_excel_files(self, original_file, new_file):
-        try:
-            # Loads the original Excel file in a DataFrame
-            original_df = pd.read_excel(original_file, sheet_name="OutputData")
+        # Loads the original Excel file in a DataFrame
+        original_df = pd.read_excel(original_file, sheet_name="OutputData")
 
-            # Loads the new Excel file in a DataFrame
-            new_df = pd.read_excel(new_file, sheet_name="OutputData")
+        # Loads the new Excel file in a DataFrame
+        new_df = pd.read_excel(new_file, sheet_name="OutputData")
 
-            # Verify the number of rows
-            self.assertEqual(
-                len(new_df),
-                len(original_df),
-                f"Number of rows is not equal in the comparison of {original_file} and {new_file}",
-            )
+        # Verify that the DataFrames are equal
+        self.assertTrue(
+            original_df.equals(new_df),
+            self.generate_difference_message(original_df, new_df, original_file, new_file),
+        )
 
-            # Verify the existence of the column "NAME".
-            self.assertIn(
-                "NAME",
-                new_df.columns,
-                f"The column 'NAME' was not found in {new_file}",
-            )
+    def generate_difference_message(self, original_df, new_df, original_file, new_file):
+        diff_df = original_df.ne(new_df)
+        diff_indices = diff_df.any(axis=1)
 
-            # Verify the values in all cells of the DataFrame
-            self.assertTrue(
-                new_df.equals(original_df),
-                f"{new_file} does not have the same values as {original_file}",
-            )
+        diff_message = f"Differences found between {original_file} and {new_file}:\n"
+        for index, row in diff_df[diff_indices].iterrows():
+            diff_message += f"Row {index+2}:\n"
+            for column, value in row.items():
+                if value:
+                    diff_message += f"  - Column '{column}': Original='{original_df.at[index, column]}', New='{new_df.at[index, column]}'\n"
 
-        except AssertionError as e:
-            self.fail(str(e))
+        return diff_message
 
     def testDawsonKathleen(self):
         self.compare_excel_files("Dawson, Kathleen ORIG.xlsx", "Dawson, Kathleen.xlsx")
