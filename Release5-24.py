@@ -4,15 +4,17 @@ import numpy as np
 
 class TestExcel(unittest.TestCase):
 
+    print("Release 5-24")
+
     def testCase1(self):
+       
+        # Description TestCase: Output Data Should remove shifts with Paycode LCUP, SHDIF and LUNCH
+        # File: TMMC
 
-        #Description TestCase: Output Data Should remove shifts with Paycode LCUP, SHDIF and LUNCH
-        #File: TMMC
-
-        # Reade Excel file and select the sheet "OutputData"
+        # Read Excel file and select the sheet "OutputData"
         data_frame = pd.read_excel("TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
-        # Obtain the column 
+        # Obtain the column
         Column = data_frame["PAYCODE"]
 
         # Checked the expected Values
@@ -20,16 +22,20 @@ class TestExcel(unittest.TestCase):
 
         missingValues = []
 
-        #if an expected value is not found in column.values, it is added to the missing_values list.
+        # if an expected value is not found in column.values, it is added to the missing_values list.
         for value in expectedValues:
             if value in Column.values:
                 missingValues.append(value)
+
         self.assertListEqual(missingValues, [], f"The following values are not present in the PAYCODE column in Excel TMMC file: {missingValues}")
 
-    def testCase2(self):
+        if not missingValues:
+            print(".TEST 1 CORRECT: The file TMMC W.E. 4.22 does not contain data 'LUNCH', 'LCUP', 'SHDIF' in the column 'PAYCODE'")
 
-        #Description TestCase: Remove SCHED shifts when is neccesary
-        #File: DELTA
+    def testCase2(self):
+    
+        # Description TestCase: Remove SCHED shifts when necessary
+        # File: DELTA
 
         data_frame = pd.read_excel("Delta Health 4.15.23.xlsx", sheet_name="OutputData")
 
@@ -38,7 +44,9 @@ class TestExcel(unittest.TestCase):
         expectedValues = ["SCHED"]
 
         for value in column:
-            self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the DELTA file.")
+            self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the Delta Health 4.15.23 file.")
+
+        print("TEST 2 CORRECT: The value SCHED is NOT present in the PAYCODE column in the Delta Health 4.15.23 file.")
     
     def testCase3(self):
 
@@ -53,6 +61,7 @@ class TestExcel(unittest.TestCase):
         for value in Column:
             self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the TMMC file.")
 
+        print("TEST 3 CORRECT: The value SCHED is NOT present in the PAYCODE column in the TMMC W.E. 4.22 file.")
     
     def testCase7(self):
 
@@ -69,6 +78,8 @@ class TestExcel(unittest.TestCase):
             if value not in Column.values:
                 missingValues.append(value)
         self.assertFalse(missingValues, f"The following values are not present in the NAME column in Excel Delta file: {missingValues}")
+
+        print("TEST 7 CORRECT: Se encontro al menos una fila para: Hunter, Angelique,Halums, Brittney,Cross, Destin,Radford, Gladys,Hale, Shannon,Kelly, Joby, Lowe, Sherrie, Lewis, Susan, Towery, Brittany in file Delta Health 4.15.23 SCHED")
 
     def testcase9(self):
         # Description: Validate Output Out time from TMMC as it takes the out time
@@ -118,6 +129,8 @@ class TestExcel(unittest.TestCase):
 
         # Check for cumulative errors and display them as a single assertion at the end
         self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
+
+        print("TEST 9 CORRECT:Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData sheet")
 
     def testcase10(self):
         # Descrition: Check RAW data Out has the same hour as output
@@ -186,8 +199,10 @@ class TestExcel(unittest.TestCase):
                 error_message = f"The line with the expected values was not found for {nurse_name} in 'RawData' - PAYCODE: {expected_paycode}, STARTDTM: {expected_startdtm}"
                 errors.append(error_message)
 
-        # Check for cumulative errors and display them as a single assertion at the end
-        self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
+                # Check for cumulative errors and display them as a single assertion at the end
+            self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
+            print("TEST 10 CORRECT: Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData and RawData sheet")
+
 
 
 if __name__ == '__main__':
