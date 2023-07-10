@@ -39,7 +39,7 @@ class ExcelTest(unittest.TestCase):
         else:
             self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
-        print("TEST 1 CORRECT: Checked that the last line of the file Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
+        print(".TEST 1 CORRECT: Checked that the last line of the file Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
 
     def testCase3(self):
 

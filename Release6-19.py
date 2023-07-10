@@ -41,15 +41,15 @@ class ExcelTest(unittest.TestCase):
 
     def testDawsonKathleen(self):
         self.compare_excel_files("Dawson, Kathleen ORIG.xlsx", "Dawson, Kathleen.xlsx")
-        print("Los datos del Dawson coinciden con la version original")
+        print(".The Dawson, Kathleen.xlsx data match the original version.")
 
     def testMattoxKyle(self):
         self.compare_excel_files("Mattox, Kyle ORIG.xlsx", "Mattox, Kyle.xlsx")
-        print("Los datos del Mattox coinciden con la version original")
+        print("The Mattox, Kyle.xlsx data match the original version.")
 
     def testHannibal(self):
         self.compare_excel_files("Hannibal 4.15.23 ORIG.xlsx", "Hannibal 4.15.23.xlsx")
-        print("Los datos del Hannibal coinciden con la version original")
+        print("Hannibal 4.15.23.xlsx data match the original version")
 
 
 if __name__ == "__main__":
