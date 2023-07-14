@@ -11,7 +11,7 @@ class TestExcel(unittest.TestCase):
         # File: TMMC
 
         # Read Excel file and select the sheet "OutputData"
-        data_frame = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
         # Obtain the column
         Column = data_frame["PAYCODE"]
@@ -37,7 +37,7 @@ class TestExcel(unittest.TestCase):
         # Description TestCase: Remove SCHED shifts when necessary
         # File: DELTA
 
-        data_frame = pd.read_excel("TestCasesAPI\Delta Health 4.15.23.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("TestCasesAPI/Delta Health 4.15.23.xlsx", sheet_name="OutputData")
 
         column = data_frame["PAYCODE"]
 
@@ -52,7 +52,7 @@ class TestExcel(unittest.TestCase):
 
         #Description TestCase: Remove SCHED shifts when is neccesary
         #File: TMMC
-        data_frame = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22.xlsx", sheet_name="OutputData")
 
         Column = data_frame["PAYCODE"]
 
@@ -66,7 +66,7 @@ class TestExcel(unittest.TestCase):
     
     def test_API_4(self):
         # Carga el archivo de Excel en un DataFrame
-        df = pd.read_excel('TestCasesAPI\TMMC W.E. 4.22.xlsx', sheet_name='OutputData')
+        df = pd.read_excel('TestCasesAPI/TMMC W.E. 4.22.xlsx', sheet_name='OutputData')
         
         # Filtra las filas donde el shift de PAYCODE está vacío pero el de HOURS no
         empty_hours = df[(df['PAYCODE'].notnull()) & (df['HOURS'].isnull())]
@@ -88,7 +88,7 @@ class TestExcel(unittest.TestCase):
     def test_API_5(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('TestCasesAPI\API Empty.xlsx', header=None)
+        df = pd.read_excel('TestCasesAPI/API Empty.xlsx', header=None)
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 
@@ -106,7 +106,7 @@ class TestExcel(unittest.TestCase):
     #File: Hannibal
 
         # Upload Excel file
-        excel_file = 'TestCasesAPI\Hannibal 4.15.23 SCHED.xlsx'
+        excel_file = 'TestCasesAPI/Hannibal 4.15.23 SCHED.xlsx'
         df = pd.read_excel(excel_file, sheet_name='OutputData')
 
         # Specify the search criteria
@@ -134,13 +134,13 @@ class TestExcel(unittest.TestCase):
         else:
             self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
-        print(".TEST 6 API CORRECT: Checked that the last line of the file TestCasesAPI\Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
+        print(".TEST 6 API CORRECT: Checked that the last line of the file TestCasesAPI/Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
     
     def test_API_7(self):
 
         #Descrition: Validate Output has all nurses
         #File: DELTA modified
-        data_frame = pd.read_excel("TestCasesAPI\Delta Health 4.15.23 SCHED.xlsx", sheet_name="OutputData")
+        data_frame = pd.read_excel("TestCasesAPI/Delta Health 4.15.23 SCHED.xlsx", sheet_name="OutputData")
         Column = data_frame["NAME"]
         expectedValues = ["Hunter, Angelique","Halums, Brittney","Cross, Destin","Radford, Gladys","Hale, Shannon","Kelly, Joby", "Lowe, Sherrie", "Lewis, Susan", "Towery, Brittany"]
         #Added a missing_values list to store the values that were not found in the "NAME" column.
@@ -159,7 +159,7 @@ class TestExcel(unittest.TestCase):
         # File: TMMC WITH SCHED
 
         # Upload Excel file
-        df = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
+        df = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
 
         # Format the date and time columns to match the expected format.
         df["STARTDTM"] = pd.to_datetime(df["STARTDTM"], format="%m/%d/%Y %H:%M")
@@ -210,8 +210,8 @@ class TestExcel(unittest.TestCase):
         # File: TMMC WITH SCHED
 
         # Upload Excel file
-        df_output = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
-        df_raw = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22 SCHED.xlsx", sheet_name="RawData")
+        df_output = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
+        df_raw = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22 SCHED.xlsx", sheet_name="RawData")
 
         # Format the date and time columns to match the expected format.
         df_output["STARTDTM"] = pd.to_datetime(df_output["STARTDTM"], format="%m/%d/%Y %H:%M")
@@ -282,7 +282,7 @@ class TestExcel(unittest.TestCase):
         #File: TMMC WITH SCHED
 
         # Loads the Excel file in a DataFrame
-        df = pd.read_excel("TestCasesAPI\TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
+        df = pd.read_excel("TestCasesAPI/TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
         
         # Verify the number of rows
         self.assertEqual(len(df), 1310-1, "Number of rows is not equal to 1310")
@@ -297,7 +297,7 @@ class TestExcel(unittest.TestCase):
         self.assertEqual(names.iloc[0], "Yu, Ace", "The value in the first row of 'NAME' is not 'Yu, Ace'.")
         self.assertEqual(names.iloc[-1], "Chekabab, Zahra", "The value in the last row of 'NAME' is not 'Chekabab, Zahra'.")
 
-        print("TEST 11 API CORRECT: Checked that the file TestCasesAPI\TestCasesAPI\TMMC W.E. 4.22 SCHED.xlsx still has the same number of rows and that the first and last row are the same.")
+        print("TEST 11 API CORRECT: Checked that the file TestCasesAPI/TestCasesAPI/TMMC W.E. 4.22 SCHED.xlsx still has the same number of rows and that the first and last row are the same.")
 
     #Methods required for API_TEST_12 and API_TEST_13
 
@@ -336,17 +336,17 @@ class TestExcel(unittest.TestCase):
     #Files: Test Dawson, Kathleen //  Mattox, Kyle  // Hannibal 4.15.23
 
     def test_API_12_1(self):
-        self.compare_excel_files("TestCasesAPI\Dawson, Kathleen ORIG.xlsx", "TestCasesAPI\Dawson, Kathleen.xlsx")
+        self.compare_excel_files("TestCasesAPI/Dawson, Kathleen ORIG.xlsx", "TestCasesAPI/Dawson, Kathleen.xlsx")
         self.assertTrue(True)
         print("TEST 12.1 API CORRECT: The Dawson, Kathleen.xlsx data match the original version.")
 
     def test_API_12_2(self):
-        self.compare_excel_files("TestCasesAPI\Mattox, Kyle ORIG.xlsx", "TestCasesAPI\Mattox, Kyle.xlsx")
+        self.compare_excel_files("TestCasesAPI/Mattox, Kyle ORIG.xlsx", "TestCasesAPI/Mattox, Kyle.xlsx")
         self.assertTrue(True)
         print("TEST 12.2 API CORRECT:The Mattox, Kyle.xlsx data match the original version.")
 
     def test_API_13(self):
-        self.compare_excel_files("TestCasesAPI\Hannibal 4.15.23 ORIG.xlsx", "TestCasesAPI\Hannibal 4.15.23.xlsx")
+        self.compare_excel_files("TestCasesAPI/Hannibal 4.15.23 ORIG.xlsx", "TestCasesAPI/Hannibal 4.15.23.xlsx")
         self.assertTrue(True)
         print("TEST 12.3 API CORRECT:The Hannibal 4.15.23.xlsx data match the original version.")
         
