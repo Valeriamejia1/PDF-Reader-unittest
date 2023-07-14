@@ -1,10 +1,11 @@
 import unittest
 import pandas as pd
 import numpy as np
+import openpyxl
 
 class TestExcel(unittest.TestCase):
 
-    def test_API_TEST_1(self):
+    def test_API_1(self):
        
         # Description TestCase: Output Data Should remove shifts with Paycode LCUP, SHDIF and LUNCH
         # File: TMMC
@@ -31,7 +32,7 @@ class TestExcel(unittest.TestCase):
             
             print(".TEST 1 API CORRECT: The file TMMC W.E. 4.22 does not contain data 'LUNCH', 'LCUP', 'SHDIF' in the column 'PAYCODE'")
 
-    def test_API_TEST_2(self):
+    def test_API_2(self):
     
         # Description TestCase: Remove SCHED shifts when necessary
         # File: DELTA
@@ -47,7 +48,7 @@ class TestExcel(unittest.TestCase):
 
         print("TEST 2 API CORRECT: The value SCHED is NOT present in the PAYCODE column in the Delta Health 4.15.23 file.")
     
-    def test_API_TEST_3(self):
+    def test_API_3(self):
 
         #Description TestCase: Remove SCHED shifts when is neccesary
         #File: TMMC
@@ -61,8 +62,51 @@ class TestExcel(unittest.TestCase):
             self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the TMMC file.")
 
         print("TEST 3 API CORRECT: The value SCHED is NOT present in the PAYCODE column in the TMMC W.E. 4.22 file.")
+    
+    
+    def test_API_4(self):
+        # Carga el archivo de Excel en un DataFrame
+        df = pd.read_excel('TestCases API\TMMC W.E. 4.22.xlsx', sheet_name='OutputData')
+        
+        # Filtra las filas donde el shift de PAYCODE está vacío pero el de HOURS no
+        empty_hours = df[(df['PAYCODE'].notnull()) & (df['HOURS'].isnull())]
+        
+        # Filtra las filas donde el shift de PAYCODE no está vacío pero el de HOURS sí
+        empty_paycode = df[(df['PAYCODE'].isnull()) & (df['HOURS'].notnull())]
+        
+        # Comprueba si hay filas que cumplan con los filtros
+        if not empty_hours.empty:
+            failed_rows = empty_hours.index + 2
+            self.fail("PAYCODE shift is not empty but HOURS shift is empty in rows {}".format(failed_rows))
 
-    def test_API_TEST_6(self):
+        if not empty_paycode.empty:
+            failed_rows = empty_paycode.index + 2
+            self.fail("The PAYCODE shift is empty but the HOURS shift is not in the rows. {}".format(failed_rows))
+
+        print(".TEST 4 API CORRECT: If no data in some shift PAYCODES in the HOURS shift there is no data either., in the file TMMC W.E. 4.22.xlsx")
+
+    def test_API_5(self):
+        # Cargar el archivo de Excel
+        file_path = 'TestCases API\API Empty.xlsx'
+        sheet_name = 'OutputData'
+
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook[sheet_name]
+
+        data = sheet.iter_rows(values_only=True)
+        next(data)  # Saltar la primera fila (encabezado)
+
+        # Verificar si hay datos en alguna fila después de la primera
+        for row in data:
+            if any(row):
+                self.fail("The API Empty.xlsx file contains additional rows to the header")
+
+        # Si no se encontraron datos, entonces el archivo solo tiene el encabezado
+        self.assertTrue(True)
+        print(".TEST 5 API CORRECT: The API Empty.xlsx file not contains additional rows to the header ")
+
+    
+    def test_API__6(self):
 
     #Descrition: Check last shift is present
     #File: Hannibal
@@ -98,7 +142,7 @@ class TestExcel(unittest.TestCase):
 
         print(".TEST 6 API CORRECT: Checked that the last line of the file TestCases API\Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
     
-    def test_API_TEST_7(self):
+    def test_API_7(self):
 
         #Descrition: Validate Output has all nurses
         #File: DELTA modified
@@ -116,7 +160,7 @@ class TestExcel(unittest.TestCase):
 
         print("TEST 7 API CORRECT: Se encontro al menos una fila para: Hunter, Angelique,Halums, Brittney,Cross, Destin,Radford, Gladys,Hale, Shannon,Kelly, Joby, Lowe, Sherrie, Lewis, Susan, Towery, Brittany in file Delta Health 4.15.23 SCHED")
 
-    def test_API_TEST_9(self):
+    def test_API_9(self):
         # Description: Validate Output Out time from TMMC as it takes the out time
         # File: TMMC WITH SCHED
 
@@ -167,7 +211,7 @@ class TestExcel(unittest.TestCase):
 
         print("TEST 9 API CORRECT:Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData sheet")
 
-    def test_API_TEST_10(self):
+    def test_API_10(self):
         # Descrition: Check RAW data Out has the same hour as output
         # File: TMMC WITH SCHED
 
@@ -238,7 +282,7 @@ class TestExcel(unittest.TestCase):
             self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
             print("TEST 10 API CORRECT: Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData and RawData sheet")
 
-    def test_API_TEST_11(self):
+    def test_API_11(self):
 
         #Descrition: Check Exe has the same data as last commit
         #File: TMMC WITH SCHED
@@ -297,17 +341,17 @@ class TestExcel(unittest.TestCase):
     #Descrition: Compare original files with new file versions of the same PDF file
     #Files: Test Dawson, Kathleen //  Mattox, Kyle  // Hannibal 4.15.23
 
-    def test_API_TEST_12_1(self):
+    def test_API_12_1(self):
         self.compare_excel_files("TestCases API\Dawson, Kathleen ORIG.xlsx", "TestCases API\Dawson, Kathleen.xlsx")
         self.assertTrue(True)
         print("TEST 12.1 API CORRECT: The Dawson, Kathleen.xlsx data match the original version.")
 
-    def test_API_TEST_12_2(self):
+    def test_API_12_2(self):
         self.compare_excel_files("TestCases API\Mattox, Kyle ORIG.xlsx", "TestCases API\Mattox, Kyle.xlsx")
         self.assertTrue(True)
         print("TEST 12.2 API CORRECT:The Mattox, Kyle.xlsx data match the original version.")
 
-    def test_API_TEST_13(self):
+    def test_API_13(self):
         self.compare_excel_files("TestCases API\Hannibal 4.15.23 ORIG.xlsx", "TestCases API\Hannibal 4.15.23.xlsx")
         self.assertTrue(True)
         print("TEST 12.3 API CORRECT:The Hannibal 4.15.23.xlsx data match the original version.")
