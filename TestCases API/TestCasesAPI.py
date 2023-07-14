@@ -86,25 +86,19 @@ class TestExcel(unittest.TestCase):
         print(".TEST 4 API CORRECT: If no data in some shift PAYCODES in the HOURS shift there is no data either., in the file TMMC W.E. 4.22.xlsx")
 
     def test_API_5(self):
-        # Cargar el archivo de Excel
-        file_path = 'TestCases API\API Empty.xlsx'
-        sheet_name = 'OutputData'
 
-        workbook = openpyxl.load_workbook(file_path)
-        sheet = workbook[sheet_name]
+        # Loads the Excel file into a DataFram
+        df = pd.read_excel('TestCases API\API Empty.xlsx', header=None)
 
-        data = sheet.iter_rows(values_only=True)
-        next(data)  # Saltar la primera fila (encabezado)
+        # Gets the number of rows with data beyond the headers
+        num_data_rows = len(df) - 1 
 
-        # Verificar si hay datos en alguna fila después de la primera
-        for row in data:
-            if any(row):
-                self.fail("The API Empty.xlsx file contains additional rows to the header")
+        # Check if there are additional rows with data
+        if num_data_rows > 0:
 
-        # Si no se encontraron datos, entonces el archivo solo tiene el encabezado
-        self.assertTrue(True)
-        print(".TEST 5 API CORRECT: The API Empty.xlsx file not contains additional rows to the header ")
-
+            self.fail("There are {} additional rows with data in the Excel file".format(num_data_rows))
+        
+        print(".TEST 5 API CORRECT: The API Empty.xlsx file not contains additional rows to the header")
     
     def test_API__6(self):
 
