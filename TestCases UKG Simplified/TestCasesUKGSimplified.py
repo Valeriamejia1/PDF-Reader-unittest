@@ -2,7 +2,23 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
+
     def test_UKGS_1(self):
+
+        # Loads the Excel file into a DataFram
+        df = pd.read_excel('TestCases UKG Simplified/UKG Simplified Empty.xlsx', header=None)
+
+        # Gets the number of rows with data beyond the headers
+        num_data_rows = len(df) - 1 
+
+        # Check if there are additional rows with data
+        if num_data_rows > 0:
+
+            self.fail("There are {} additional rows with data in the Excel file".format(num_data_rows))
+        
+        print(".TEST 1 UKGCommon CORRECT: The UKG Simplified Empty.xlsx file not contains additional rows to the header")
+
+    def test_UKGS_2(self):
         # Description: Check last shift is present
         # File: TimeDetailsSorted_KEVCOL_2023-04-13T093000.546
         # Upload Excel file
@@ -44,9 +60,8 @@ class ExcelTest(unittest.TestCase):
                 self.fail("No matching row was found in the Excel file.")
             else:
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
-                print("The data is correct.")
+                print("TEST 2 UKGSimplified CORRECT:Data for WARREN, DANIELLE was found and is correct in file TimeDetailsSorted_KEVCOL.xlsx.")
 
-            print("TEST 1 UKGSimplified CORRECT:Data for WARREN, DANIELLE was found and is correct in file TimeDetailsSorted_KEVCOL.xlsx.")
 
     #Methods required for test_UKGC_3
 
@@ -86,15 +101,15 @@ class ExcelTest(unittest.TestCase):
     #Descrition: Check Exe has the same data as last commit
     #Files: TimeDetailsSorted_KEVCOL, Qualvis TimeSheets 2023-06-03
     
-    def test_UKGS_2_1(self):
+    def test_UKGS_3_1(self):
         self.compare_excel_files("TestCases UKG Simplified\TimeDetailsSorted_KEVCOL ORIG.xlsx", "TestCases UKG Simplified\TimeDetailsSorted_KEVCOL.xlsx")
-        print("TEST 2.1 UKGSimplified CORRECT: TimeDetailsSorted_KEVCOL.xlsx data match the original version")
+        print("TEST 3.1 UKGSimplified CORRECT: TimeDetailsSorted_KEVCOL.xlsx data match the original version")
 
-    def test_UKGS_2_2(self):
+    def test_UKGS_3_2(self):
         self.compare_excel_files("TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03.xlsx")
-        print("TEST 2.2 UKGSimplified CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
+        print("TEST 3.2 UKGSimplified CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
 
-    def test_UKGS_3(self):
+    def test_UKGS_4(self):
 
         #Description: Verified that all shift are with Paycodes as Regular or Different Paycode 
         #File: Qualvis TimeSheets 2023-06-03.xlsx
@@ -115,9 +130,9 @@ class ExcelTest(unittest.TestCase):
             empty_row_numbers = [f"Row(s): {row}" for row in empty_row_indices]
             self.fail(f"The following rows have no data in the 'PAYCODE' column: {', '.join(empty_row_numbers)}")
         else:
-            print("TEST 3 UKGSimplified CORRECT: Column 'PAYCODE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
+            print("TEST 4 UKGSimplified CORRECT: Column 'PAYCODE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
 
-    def test_UKGS_4(self):
+    def test_UKGS_5(self):
 
         #Descrition: Verified shift without hours and start date are showing up in output file 
         #Files: Qualvis TimeSheets 2023-06-03.xlsx
@@ -138,7 +153,7 @@ class ExcelTest(unittest.TestCase):
             empty_row_numbers = [f"Row(s): {row}" for row in empty_row_indices]
             self.fail(f"The following rows have no data in the 'DATE' column: {', '.join(empty_row_numbers)}")
         else:
-            print("TEST 4 UKGSimplified CORRECT:Column 'DATE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
+            print("TEST 5 UKGSimplified CORRECT:Column 'DATE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
 
 if __name__ == '__main__':
     unittest.main()

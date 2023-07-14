@@ -2,6 +2,22 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
+
+    def test_UKGC_1(self):
+
+        # Loads the Excel file into a DataFram
+        df = pd.read_excel('TestCases UKG Common/UKG Common Empty.xlsx', header=None)
+
+        # Gets the number of rows with data beyond the headers
+        num_data_rows = len(df) - 1 
+
+        # Check if there are additional rows with data
+        if num_data_rows > 0:
+
+            self.fail("There are {} additional rows with data in the Excel file".format(num_data_rows))
+        
+        print(".TEST 1 UKGCommon CORRECT: The UKG Common Empty.xlsx file not contains additional rows to the header")
+    
     def test_UKGC_2(self):
         # Description: Check last shift is present
         # File: Martin ppe
@@ -44,9 +60,9 @@ class ExcelTest(unittest.TestCase):
                 self.fail("No matching row was found in the Excel file.")
             else:
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
-                print("The data is correct.")
+                print("TEST 2 UKGCommon CORRECT: Data for WARREN, DANIELLE was found and is correct in file Martin ppe 4.22.23.")
 
-            print("TEST 2 UKGCommon CORRECT: Data for WARREN, DANIELLE was found and is correct in file Martin ppe 4.22.23.")
+            
 
     #Methods required for test_UKGC_3
 
