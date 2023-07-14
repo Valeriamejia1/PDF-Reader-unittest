@@ -28,7 +28,8 @@ class TestExcel(unittest.TestCase):
         self.assertListEqual(missingValues, [], f"The following values are not present in the PAYCODE column in Excel TMMC file: {missingValues}")
 
         if not missingValues:
-            print(".TEST 1 CORRECT: The file TMMC W.E. 4.22 does not contain data 'LUNCH', 'LCUP', 'SHDIF' in the column 'PAYCODE'")
+            
+            print(".TEST 1 API CORRECT: The file TMMC W.E. 4.22 does not contain data 'LUNCH', 'LCUP', 'SHDIF' in the column 'PAYCODE'")
 
     def test_API_TEST_2(self):
     
@@ -44,7 +45,7 @@ class TestExcel(unittest.TestCase):
         for value in column:
             self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the Delta Health 4.15.23 file.")
 
-        print("TEST 2 CORRECT: The value SCHED is NOT present in the PAYCODE column in the Delta Health 4.15.23 file.")
+        print("TEST 2 API CORRECT: The value SCHED is NOT present in the PAYCODE column in the Delta Health 4.15.23 file.")
     
     def test_API_TEST_3(self):
 
@@ -59,7 +60,7 @@ class TestExcel(unittest.TestCase):
         for value in Column:
             self.assertNotIn(value, expectedValues, f"The value '{value}' is present in the PAYCODE column in the TMMC file.")
 
-        print("TEST 3 CORRECT: The value SCHED is NOT present in the PAYCODE column in the TMMC W.E. 4.22 file.")
+        print("TEST 3 API CORRECT: The value SCHED is NOT present in the PAYCODE column in the TMMC W.E. 4.22 file.")
 
     def test_API_TEST_6(self):
 
@@ -95,7 +96,7 @@ class TestExcel(unittest.TestCase):
         else:
             self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
 
-        print(".TEST 6 CORRECT: Checked that the last line of the file TestCases API\Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
+        print(".TEST 6 API CORRECT: Checked that the last line of the file TestCases API\Hannibal 4.15.23 SCHED.xlsx is still for WYCOFF, JENNA with the same data")
     
     def test_API_TEST_7(self):
 
@@ -113,7 +114,7 @@ class TestExcel(unittest.TestCase):
                 missingValues.append(value)
         self.assertFalse(missingValues, f"The following values are not present in the NAME column in Excel Delta file: {missingValues}")
 
-        print("TEST 7 CORRECT: Se encontro al menos una fila para: Hunter, Angelique,Halums, Brittney,Cross, Destin,Radford, Gladys,Hale, Shannon,Kelly, Joby, Lowe, Sherrie, Lewis, Susan, Towery, Brittany in file Delta Health 4.15.23 SCHED")
+        print("TEST 7 API CORRECT: Se encontro al menos una fila para: Hunter, Angelique,Halums, Brittney,Cross, Destin,Radford, Gladys,Hale, Shannon,Kelly, Joby, Lowe, Sherrie, Lewis, Susan, Towery, Brittany in file Delta Health 4.15.23 SCHED")
 
     def test_API_TEST_9(self):
         # Description: Validate Output Out time from TMMC as it takes the out time
@@ -164,7 +165,7 @@ class TestExcel(unittest.TestCase):
         # Check for cumulative errors and display them as a single assertion at the end
         self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
 
-        print("TEST 9 CORRECT:Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData sheet")
+        print("TEST 9 API CORRECT:Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData sheet")
 
     def test_API_TEST_10(self):
         # Descrition: Check RAW data Out has the same hour as output
@@ -235,7 +236,7 @@ class TestExcel(unittest.TestCase):
 
                 # Check for cumulative errors and display them as a single assertion at the end
             self.assertEqual(errors, [], f"The following errors were found in the testcase:\n\n{', '.join(errors)}")
-            print("TEST 10 CORRECT: Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData and RawData sheet")
+            print("TEST 10 API CORRECT: Data for Chekabab, Zahra and for Maldonado, Marleny were found in the file TMMC W.E. 4.22 SCHED in OutputData and RawData sheet")
 
     def test_API_TEST_11(self):
 
@@ -258,7 +259,7 @@ class TestExcel(unittest.TestCase):
         self.assertEqual(names.iloc[0], "Yu, Ace", "The value in the first row of 'NAME' is not 'Yu, Ace'.")
         self.assertEqual(names.iloc[-1], "Chekabab, Zahra", "The value in the last row of 'NAME' is not 'Chekabab, Zahra'.")
 
-        print("TEST 3 CORRECT: Checked that the file TestCases API\TestCases API\TMMC W.E. 4.22 SCHED.xlsx still has the same number of rows and that the first and last row are the same.")
+        print("TEST 11 API CORRECT: Checked that the file TestCases API\TestCases API\TMMC W.E. 4.22 SCHED.xlsx still has the same number of rows and that the first and last row are the same.")
 
     #Methods required for API_TEST_12 and API_TEST_13
 
@@ -297,21 +298,20 @@ class TestExcel(unittest.TestCase):
     #Files: Test Dawson, Kathleen //  Mattox, Kyle  // Hannibal 4.15.23
 
     def test_API_TEST_12_1(self):
-        self.compare_excel_files("TestCases API\API_TEST_12_1 ORIG.xlsx", "TestCases API\Dawson, Kathleen.xlsx")
+        self.compare_excel_files("TestCases API\Dawson, Kathleen ORIG.xlsx", "TestCases API\Dawson, Kathleen.xlsx")
         self.assertTrue(True)
-        print("The TestCases API\Dawson, Kathleen.xlsx data match the original version.")
+        print("TEST 12.1 API CORRECT: The Dawson, Kathleen.xlsx data match the original version.")
 
     def test_API_TEST_12_2(self):
         self.compare_excel_files("TestCases API\Mattox, Kyle ORIG.xlsx", "TestCases API\Mattox, Kyle.xlsx")
         self.assertTrue(True)
-        print("The TestCases API\Mattox, Kyle.xlsx data match the original version.")
+        print("TEST 12.2 API CORRECT:The Mattox, Kyle.xlsx data match the original version.")
 
     def test_API_TEST_13(self):
         self.compare_excel_files("TestCases API\Hannibal 4.15.23 ORIG.xlsx", "TestCases API\Hannibal 4.15.23.xlsx")
         self.assertTrue(True)
+        print("TEST 12.3 API CORRECT:The Hannibal 4.15.23.xlsx data match the original version.")
         
-
-
 
 if __name__ == '__main__':
     unittest.main()
