@@ -2,11 +2,11 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
-    def testCase1(self):
+    def test_UKGS_1(self):
         # Description: Check last shift is present
         # File: TimeDetailsSorted_KEVCOL_2023-04-13T093000.546
         # Upload Excel file
-        excel_file = 'TimeDetailsSorted_KEVCOL_2023-04-13T093000.546.xlsx'
+        excel_file = 'TestCases UKG Simplified\TimeDetailsSorted_KEVCOL.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -46,11 +46,12 @@ class ExcelTest(unittest.TestCase):
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
                 print("The data is correct.")
 
-            print("TEST 1 CORRECT:Data for WARREN, DANIELLE was found and is correct.")
+            print("TEST 1 UKGSimplified CORRECT:Data for WARREN, DANIELLE was found and is correct in file TimeDetailsSorted_KEVCOL.xlsx.")
+
+    #Methods required for test_UKGC_3
 
     def compare_excel_files(self, original_file, new_file):
-        #Descrition: Check Exe has the same data as last commit
-        #Files: All Files
+
 
         # Loads the original Excel file in a DataFrame
         original_df = pd.read_excel(original_file, sheet_name="Sheet1")
@@ -82,18 +83,24 @@ class ExcelTest(unittest.TestCase):
 
         return diff_message
 
+    #Descrition: Check Exe has the same data as last commit
+    #Files: TimeDetailsSorted_KEVCOL, Qualvis TimeSheets 2023-06-03
+    
+    def test_UKGS_2_1(self):
+        self.compare_excel_files("TestCases UKG Simplified\TimeDetailsSorted_KEVCOL ORIG.xlsx", "TestCases UKG Simplified\TimeDetailsSorted_KEVCOL.xlsx")
+        print("TEST 2.1 UKGSimplified CORRECT: TimeDetailsSorted_KEVCOL.xlsx data match the original version")
 
-    def testMartinppe(self):
-        self.compare_excel_files("Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "Qualvis TimeSheets 2023-06-03.xlsx")
-        print("TEST 3 CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
+    def test_UKGS_2_2(self):
+        self.compare_excel_files("TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03.xlsx")
+        print("TEST 2.2 UKGSimplified CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
 
-    def testMartinB(self):
-        self.compare_excel_files("TimeDetailsSorted_KEVCOL_2023-04-13T093000.546 ORIG.xlsx", "TimeDetailsSorted_KEVCOL_2023-04-13T093000.546.xlsx")
-        print("TEST 3.1 CORRECT: TimeDetailsSorted_KEVCOL_2023-04-13T093000.546.xlsx data match the original version")
+    def test_UKGS_3(self):
 
-    def test_case_9(self):
+        #Description: Verified that all shift are with Paycodes as Regular or Different Paycode 
+        #File: Qualvis TimeSheets 2023-06-03.xlsx
+
         # Upload Excel file
-        df = pd.read_excel("Qualvis TimeSheets 2023-06-03.xlsx")
+        df = pd.read_excel("TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "PAYCODE" exists in the file
         if "PAYCODE" not in df.columns:
@@ -108,11 +115,15 @@ class ExcelTest(unittest.TestCase):
             empty_row_numbers = [f"Row(s): {row}" for row in empty_row_indices]
             self.fail(f"The following rows have no data in the 'PAYCODE' column: {', '.join(empty_row_numbers)}")
         else:
-            print("TEST 9 CORRECT:Column 'PAYCODE' does not contain empty data in its rows.")
+            print("TEST 3 UKGSimplified CORRECT: Column 'PAYCODE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
 
-    def test_case_10(self):
+    def test_UKGS_4(self):
+
+        #Descrition: Verified shift without hours and start date are showing up in output file 
+        #Files: Qualvis TimeSheets 2023-06-03.xlsx
+
         # Upload Excel file
-        df = pd.read_excel("TimeDetailsSorted_KEVCOL_2023-04-13T093000.546.xlsx")
+        df = pd.read_excel("TestCases UKG Simplified\Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "DATE" exists in the file
         if "DATE" not in df.columns:
@@ -127,7 +138,7 @@ class ExcelTest(unittest.TestCase):
             empty_row_numbers = [f"Row(s): {row}" for row in empty_row_indices]
             self.fail(f"The following rows have no data in the 'DATE' column: {', '.join(empty_row_numbers)}")
         else:
-            print("TEST 10 CORRECT:Column 'DATE' does not contain empty data in its rows.")
+            print("TEST 4 UKGSimplified CORRECT:Column 'DATE' does not contain empty data in its rows in file Qualvis TimeSheets 2023-06-03.xlsx.")
 
 if __name__ == '__main__':
     unittest.main()

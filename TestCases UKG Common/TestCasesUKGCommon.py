@@ -2,11 +2,11 @@ import unittest
 import pandas as pd
 
 class ExcelTest(unittest.TestCase):
-    def testCase1(self):
+    def test_UKGC_2(self):
         # Description: Check last shift is present
         # File: Martin ppe
         # Upload Excel file
-        excel_file = 'Martin ppe 4.22.23.xlsx'
+        excel_file = 'TestCases UKG Common\Martin ppe 4.22.23.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -46,12 +46,12 @@ class ExcelTest(unittest.TestCase):
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
                 print("The data is correct.")
 
-            print("TEST 1 CORRECT:Data for WARREN, DANIELLE was found and is correct.")
-    
-    def compare_excel_files(self, original_file, new_file):
-        #Descrition: Check Exe has the same data as last commit
-        #Files: All Files
+            print("TEST 2 UKGCommon CORRECT: Data for WARREN, DANIELLE was found and is correct in file Martin ppe 4.22.23.")
 
+    #Methods required for test_UKGC_3
+
+    def compare_excel_files(self, original_file, new_file):
+        
         # Loads the original Excel file in a DataFrame
         original_df = pd.read_excel(original_file, sheet_name="Sheet1")
 
@@ -82,18 +82,20 @@ class ExcelTest(unittest.TestCase):
 
         return diff_message
 
+    #Descrition: Check Exe has the same data as last commit
+    #Files: Martin ppe 4.22.23, martin b, time martin a ORIG
 
-    def testMartinppe(self):
-        self.compare_excel_files("Martin ppe 4.22.23 ORIG.xlsx", "Martin ppe 4.22.23.xlsx")
-        print("Martin ppe 4.22.23.xlsx data match the original version")
+    def test_UKGC_3_1(self):
+        self.compare_excel_files("TestCases UKG Common\Martin ppe 4.22.23 ORIG.xlsx", "TestCases UKG Common\Martin ppe 4.22.23.xlsx")
+        print("TEST 3.1 UKGCommon CORRECT: Martin ppe 4.22.23.xlsx data match the original version")
 
-    def testMartinB(self):
-        self.compare_excel_files("martin b ORIG.xlsx", "martin b.xlsx")
-        print("Martin ppe 4.22.23.xlsx data match the original version")
+    def test_UKGC_3_2(self):
+        self.compare_excel_files("TestCases UKG Common\martin b ORIG.xlsx", "TestCases UKG Common\martin b.xlsx")
+        print("TEST 3.2 UKGCommon CORRECT: martin b ORIG.xlsx data match the original version")
 
-    def testTimeMartin(self):
-        self.compare_excel_files("time martin a ORIG.xlsx", "time martin a.xlsx")
-        print("Martin ppe 4.22.23.xlsx data match the original version")
+    def test_UKGC_3_3(self):
+        self.compare_excel_files("TestCases UKG Common\martin time a ORIG.xlsx", "TestCases UKG Common\martin time a.xlsx")
+        print("TEST 3.3 UKGCommon CORRECT: martin time a ORIG.xlsx data match the original version")
 
 if __name__ == '__main__':
     unittest.main()
