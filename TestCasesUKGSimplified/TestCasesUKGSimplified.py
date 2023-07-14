@@ -22,7 +22,7 @@ class ExcelTest(unittest.TestCase):
         # Description: Check last shift is present
         # File: TimeDetailsSorted_KEVCOL_2023-04-13T093000.546
         # Upload Excel file
-        excel_file = 'TestCasesUKGSimplified\TimeDetailsSorted_KEVCOL.xlsx'
+        excel_file = 'TestCasesUKGSimplified/TimeDetailsSorted_KEVCOL.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -102,11 +102,11 @@ class ExcelTest(unittest.TestCase):
     #Files: TimeDetailsSorted_KEVCOL, Qualvis TimeSheets 2023-06-03
     
     def test_UKGS_3_1(self):
-        self.compare_excel_files("TestCasesUKGSimplified\TimeDetailsSorted_KEVCOL ORIG.xlsx", "TestCasesUKGSimplified\TimeDetailsSorted_KEVCOL.xlsx")
+        self.compare_excel_files("TestCasesUKGSimplified/TimeDetailsSorted_KEVCOL ORIG.xlsx", "TestCasesUKGSimplified/TimeDetailsSorted_KEVCOL.xlsx")
         print("TEST 3.1 UKGSimplified CORRECT: TimeDetailsSorted_KEVCOL.xlsx data match the original version")
 
     def test_UKGS_3_2(self):
-        self.compare_excel_files("TestCasesUKGSimplified\Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "TestCasesUKGSimplified\Qualvis TimeSheets 2023-06-03.xlsx")
+        self.compare_excel_files("TestCasesUKGSimplified/Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "TestCasesUKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
         print("TEST 3.2 UKGSimplified CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
 
     def test_UKGS_4(self):
@@ -115,7 +115,7 @@ class ExcelTest(unittest.TestCase):
         #File: Qualvis TimeSheets 2023-06-03.xlsx
 
         # Upload Excel file
-        df = pd.read_excel("TestCasesUKGSimplified\Qualvis TimeSheets 2023-06-03.xlsx")
+        df = pd.read_excel("TestCasesUKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "PAYCODE" exists in the file
         if "PAYCODE" not in df.columns:
@@ -138,7 +138,7 @@ class ExcelTest(unittest.TestCase):
         #Files: Qualvis TimeSheets 2023-06-03.xlsx
 
         # Upload Excel file
-        df = pd.read_excel("TestCasesUKGSimplified\Qualvis TimeSheets 2023-06-03.xlsx")
+        df = pd.read_excel("TestCasesUKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "DATE" exists in the file
         if "DATE" not in df.columns:
