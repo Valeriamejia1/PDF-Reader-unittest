@@ -6,7 +6,7 @@ class ExcelTest(unittest.TestCase):
     def test_UKGC_1(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('TestCases UKG Common/UKG Common Empty.xlsx', header=None)
+        df = pd.read_excel('TestCasesUKGCommon/UKG Common Empty.xlsx', header=None)
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 
@@ -22,7 +22,7 @@ class ExcelTest(unittest.TestCase):
         # Description: Check last shift is present
         # File: Martin ppe
         # Upload Excel file
-        excel_file = 'TestCases UKG Common\Martin ppe 4.22.23.xlsx'
+        excel_file = 'TestCasesUKGCommon\Martin ppe 4.22.23.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -102,15 +102,15 @@ class ExcelTest(unittest.TestCase):
     #Files: Martin ppe 4.22.23, martin b, time martin a ORIG
 
     def test_UKGC_3_1(self):
-        self.compare_excel_files("TestCases UKG Common\Martin ppe 4.22.23 ORIG.xlsx", "TestCases UKG Common\Martin ppe 4.22.23.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon\Martin ppe 4.22.23 ORIG.xlsx", "TestCasesUKGCommon\Martin ppe 4.22.23.xlsx")
         print("TEST 3.1 UKGCommon CORRECT: Martin ppe 4.22.23.xlsx data match the original version")
 
     def test_UKGC_3_2(self):
-        self.compare_excel_files("TestCases UKG Common\martin b ORIG.xlsx", "TestCases UKG Common\martin b.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon\martin b ORIG.xlsx", "TestCasesUKGCommon\martin b.xlsx")
         print("TEST 3.2 UKGCommon CORRECT: martin b ORIG.xlsx data match the original version")
 
     def test_UKGC_3_3(self):
-        self.compare_excel_files("TestCases UKG Common\martin time a ORIG.xlsx", "TestCases UKG Common\martin time a.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon\martin time a ORIG.xlsx", "TestCasesUKGCommon\martin time a.xlsx")
         print("TEST 3.3 UKGCommon CORRECT: martin time a ORIG.xlsx data match the original version")
 
 if __name__ == '__main__':
