@@ -133,9 +133,10 @@ class ExcelTest(unittest.TestCase):
             if pd.isna(comment_value):
                 comment_value = ""
                 
-            self.assertEqual(error_message)
+            self.assertEqual(comment_value, expected_comment, error_message)
 
-        print ("TEST 4 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the comments match those in the PDF")
+        print("TEST 4 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the comments match those in the PDF")
+
 
     def test_UKGC_5(self):
         excel_file = "TestCasesUKGCommon/Martin ppe 4.22.23.xlsx"
