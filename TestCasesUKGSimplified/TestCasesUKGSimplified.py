@@ -16,7 +16,7 @@ class ExcelTest(unittest.TestCase):
 
             self.fail("There are {} additional rows with data in the Excel file".format(num_data_rows))
         
-        print(".TEST 1 UKGCommon CORRECT: The UKG Simplified Empty.xlsx file not contains additional rows to the header")
+        print(".TEST 1 UKGSimplified CORRECT: The UKG Simplified Empty.xlsx file not contains additional rows to the header")
 
     def test_UKGS_2(self):
         # Description: Check last shift is present
