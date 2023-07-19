@@ -61,9 +61,7 @@ class ExcelTest(unittest.TestCase):
             else:
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
                 print("TEST 2 UKGCommon CORRECT: Data for WARREN, DANIELLE was found and is correct in file Martin ppe 4.22.23.")
-
-            
-
+   
     #Methods required for test_UKGC_3
 
     def compare_excel_files(self, original_file, new_file):
@@ -112,6 +110,53 @@ class ExcelTest(unittest.TestCase):
     def test_UKGC_3_3(self):
         self.compare_excel_files("TestCasesUKGCommon/martin time a ORIG.xlsx", "TestCasesUKGCommon/martin time a.xlsx")
         print("TEST 3.3 UKGCommon CORRECT: martin time a ORIG.xlsx data match the original version")
+
+    def test_UKGC_4(self):
+        excel_file = "TestCasesUKGCommon/Martin ppe 4.22.23.xlsx"
+        sheet_name = "Sheet1"
+        data = pd.read_excel(excel_file, sheet_name=sheet_name)
+        name_column = "NAME"
+        date_column = "DATE"
+        Comment_column = "Comments"
+
+        # Filter rows with "AUGUSTE, LOURDJINA" in column "NAME".
+        filtered_rows = data[data[name_column] == "AUGUSTE, LOURDJINA"]
+
+        for index, row in filtered_rows.iterrows():
+            date_value = row[date_column]
+            comment_value = row[Comment_column]
+
+            expected_comment = "" if date_value == "04/22/2023" else "CC/MARTIN/MARTINNORTHHOSPITAL/CNO/NRS/INPAT-CLINICALDECISIONUNIT2W/RN"
+            error_message = f"Error: The Comment value for row {index + 2} is not '{expected_comment}'"
+
+            # Check if the comment value is NaN
+            if pd.isna(comment_value):
+                comment_value = ""
+                
+            self.assertEqual(error_message)
+
+        print ("TEST 4 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the comments match those in the PDF")
+
+    def test_UKGC_5(self):
+        excel_file = "TestCasesUKGCommon/Martin ppe 4.22.23.xlsx"
+        sheet_name = "Sheet1"
+        data = pd.read_excel(excel_file, sheet_name=sheet_name)
+        name_column = "NAME"
+        date_column = "DATE"
+        glcode_column = "GLCODE"
+
+        # Filter rows with "AUGUSTE, LOURDJINA" in column "NAME".
+        filtered_rows = data[data[name_column] == "AUGUSTE, LOURDJINA"]
+
+        for index, row in filtered_rows.iterrows():
+            date_value = row[date_column]
+            glcode_value = row[glcode_column]
+
+            expected_glcode = "3100-3100-31812" if date_value == "04/22/2023" else "3100-3100-31429"
+            error_message = f"Error: The GLCODE value for row {index + 2} is not '{expected_glcode}'"
+            self.assertEqual(glcode_value, expected_glcode, error_message)
+
+        print ("TEST 5 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the GLCODES match those in the PDF")
 
 if __name__ == '__main__':
     unittest.main()

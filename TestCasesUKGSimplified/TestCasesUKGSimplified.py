@@ -62,7 +62,6 @@ class ExcelTest(unittest.TestCase):
                 self.assertEqual(len(filtered_df), 1, 'Multiple matches found in Excel file.')
                 print("TEST 2 UKGSimplified CORRECT:Data for WARREN, DANIELLE was found and is correct in file TimeDetailsSorted_KEVCOL.xlsx.")
 
-
     #Methods required for test_UKGC_3
 
     def compare_excel_files(self, original_file, new_file):
