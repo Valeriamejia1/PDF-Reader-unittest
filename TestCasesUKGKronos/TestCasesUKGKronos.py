@@ -25,7 +25,7 @@ class TestExcel(unittest.TestCase):
         #File: Hannibal
 
             # Upload Excel file
-            excel_file = 'TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx'
+            excel_file = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
             df = pd.read_excel(excel_file)
        
             # Specify the search criteria
@@ -54,9 +54,9 @@ class TestExcel(unittest.TestCase):
 
     #Methods required for test_UKGK
 
-    def test_UKGS_3_1(self):
-        self.compare_excel_files("TestCasesUKGKronos\Qualivis Time report PPE 062423 ORIG.xlsx", "TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx")
-        print("TEST 3.1 UKGKronos CORRECT: Qualivis Time report PPE 062423.xlsx data match the original version")
+    def test_UKGS_4(self):
+        self.compare_excel_files("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx", "TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
+        print("TEST 4 UKGKronos CORRECT: Qualivis Time report PPE 062423.xlsx data match the original version")
 
     def generate_difference_message(self, original_df, new_df, original_file, new_file):
         original_df = original_df.fillna("NA")
@@ -118,7 +118,7 @@ class TestExcel(unittest.TestCase):
             return False
 
     def test_UKGK_5(self):
-        path_file = 'TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx'
+        path_file = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
         sheet_namee = 'Sheet1'
         column = 'PRIMARY JOB'
 
@@ -174,7 +174,7 @@ class TestExcel(unittest.TestCase):
             return False
 
     def test_UKGK_7(self):
-        pahtfile = 'TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx'
+        pahtfile = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
 
         resultado = self.verified_names(pahtfile)
         if resultado:
@@ -223,6 +223,37 @@ class TestExcel(unittest.TestCase):
         self.assertEqual(actual_hours, expected_hours, f"Hours do not match the expected value '9.75'.")
 
         print("TEST 9 UKGKronos CORRECT: The last row for PALMER, NATALIE is correct, hours is 9.75.")
+
+    def test_UKGK10(self):
+        # Define the expected values
+        expected_name = "DUNDAS, TAYLOR"
+        expected_date = "06/17/2023"
+        expected_paycode = "OR-HRT CALL WE"
+
+        # Load the Excel file into a pandas DataFrame
+        file_path = "TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx"
+        sheet_name = "Sheet1"
+        df = pd.read_excel(file_path, sheet_name=sheet_name)
+
+        # Function to check and report discrepancies in the DataFrame
+        errors = []
+        for index, row in df.iterrows():
+            if row["NAME"] == expected_name and row["DATE"] == expected_date:
+                actual_paycode = str(row["PAYCODE"]).strip()  # Remove spaces
+                if actual_paycode == expected_paycode:
+                    # Found a matching row, exit the loop since we found what we were looking for
+                    break
+
+                else:
+                    errors.append(f"Row {index} has PAYCODE mismatch. Expected: {expected_paycode}, Actual: {actual_paycode}")
+                    break  # Added a break to exit the loop if there's a mismatch
+
+        # If there are any errors in the DataFrame, fail the test
+        if errors:
+            self.fail("\n".join(errors))
+
+        # If no errors were found, the test was successful
+        print("TEST 10 UKGKronos CORRECT: The PAYCODE column is correct for the nurse that you requested.")
 
 
 if __name__ == "__main__":
