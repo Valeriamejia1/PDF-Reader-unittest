@@ -1,5 +1,6 @@
 import unittest
 import pandas as pd
+import string
 
 class TestExcel(unittest.TestCase):
 
@@ -51,6 +52,81 @@ class TestExcel(unittest.TestCase):
 
             print(".TEST 2 UKG Kronos CORRECT: Checked that the last line of the file Qualivis Time report PPE 062423.xlsx is still for WUISCHPARD, DAVID with the same data")
 
+    #Methods required for test_UKGK
+
+    def test_UKGS_3_1(self):
+        self.compare_excel_files("TestCasesUKGKronos\Qualivis Time report PPE 062423 ORIG.xlsx", "TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx")
+        print("TEST 3.1 UKGKronos CORRECT: Qualivis Time report PPE 062423.xlsx data match the original version")
+
+    def generate_difference_message(self, original_df, new_df, original_file, new_file):
+        original_df = original_df.fillna("NA")
+        new_df = new_df.fillna("NA")
+
+        diff_df = original_df != new_df
+        diff_indices = diff_df.any(axis=1)
+
+        diff_message = f"Differences found between {original_file} and {new_file}:\n"
+        for index, row in diff_df[diff_indices].iterrows():
+            diff_message += f"Row {index+2}:\n"
+            for column, value in row.items():
+                if value:
+                    original_value = original_df.at[index, column]
+                    new_value = new_df.at[index, column]
+                    diff_message += f"  - Column '{column}': Original='{original_value}', New='{new_value}'\n"
+
+        return diff_message
+    
+    def compare_excel_files(self, original_file, new_file):
+        # Loads the original Excel file in a DataFrame
+        original_df = pd.read_excel(original_file, sheet_name="Sheet1")
+
+        # Loads the new Excel file in a DataFrame
+        new_df = pd.read_excel(new_file, sheet_name="Sheet1")
+
+        # Verify that the DataFrames are equal
+        self.assertTrue(
+            original_df.equals(new_df),
+            self.generate_difference_message(original_df, new_df, original_file, new_file),
+        )
+
+    #Descrition: Check Exe has the same data as last commit
+    #Files: Qualivis Time report PPE 062423
+
+    def verified_columns(path_file, sheet_namee, column):
+        try:
+            # Leer el archivo Excel en un DataFrame
+            df = pd.read_excel(path_file, sheet_name=sheet_namee, engine='openpyxl')
+
+            # Verificar si la columna está presente
+            assert column in df.columns, f'The column "{column}" is not present in the file.'
+
+            # Verificar si hay filas con campos vacíos en la columna
+            filas_vacias = df[df[column].isnull()]
+            if not filas_vacias.empty:
+                mensaje_error = 'There are empty fields in the column "{0}" in the following rows:\n'.format(column)
+                for index, _ in filas_vacias.iterrows():
+                    mensaje_error += 'Row(s): {0}\n'.format(index + 2) 
+                # Obtener la letra de la columna correspondiente
+                col_idx = df.columns.get_loc(column)
+                col_letra = string.ascii_uppercase[col_idx]
+                mensaje_error += 'Column: {0}\n'.format(col_letra)
+                raise AssertionError(mensaje_error)
+
+            return True
+        except Exception as e:
+            print(f'Error: {e}')
+            return False
+
+    def test_UKGK_5(self):
+        path_file = 'TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx'
+        sheet_namee = 'Sheet1'
+        column = 'PRIMARY JOB'
+
+        resultado = TestExcel.verified_columns(path_file, sheet_namee, column)
+        print("TEST 5 UKGKronos CORRECT: Qualivis Time report PPE 062423 CORRECT: Qualivis Time report PPE 062423.xlsx column PRIMARY JOB  is in the file")
+        self.assertTrue(resultado)
+
+    
     def test_UKGK_6(self):
         # Load the Excel files into pandas DataFrames
         expected_df = pd.read_excel("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx")
@@ -71,6 +147,39 @@ class TestExcel(unittest.TestCase):
             raise AssertionError("Data mismatch found between the two Excel files.")
         else:
             print("TEST 6 UKGKronos CORRECT: The 'NAME' and 'Comments' columns in the Excel files are the same.")
+
+    def verified_names(self, pahtfile):
+        try:
+            # Leer el archivo Excel en un DataFrame sin considerar el encabezado
+            df = pd.read_excel(pahtfile, sheet_name='Sheet1', header=None, engine='openpyxl')
+
+            # Nombre esperado y rangos de filas para cada nombre
+            expectedname = {
+                'VALLE, DIANA DEJESUS': (1026, 1068),
+                'JISON, ROSE ANNE': (413, 420),
+                'BURNS-BARRINO,LATASHA': (105, 111)
+            }
+
+            # Verificar cada nombre en su rango de filas especificado
+            for name, (fila_inicial, fila_final) in expectedname.items():
+                offset = 1 if df.iat[0, 1] == 'NAME' else 0  # Ajuste para considerar si hay encabezado
+                for index in range(fila_inicial - offset, fila_final - 1):
+                    if df.at[index, 1] != name:  # Columna 'NAME' es la columna 1
+                        raise AssertionError(f"Error: The name '{name}' in row {index + 1} is different. Value found: {df.at[index, 1]}")
+
+            return True
+
+        except Exception as e:
+            print(f'Error: {e}')
+            return False
+
+    def test_UKGK_7(self):
+        pahtfile = 'TestCasesUKGKronos\Qualivis Time report PPE 062423.xlsx'
+
+        resultado = self.verified_names(pahtfile)
+        if resultado:
+            print("TEST 7 UKGKronos CORRECT: The names 'VALLE, DIANA DEJESUS', 'JISON, ROSE ANNE' and 'BURNS-BARRINO, LATASHA' are present and spelled correctly in the specified rows.")
+        self.assertTrue(resultado)
 
     def test_UKGK_8(self):
         # Load the Excel file into a pandas DataFrame
