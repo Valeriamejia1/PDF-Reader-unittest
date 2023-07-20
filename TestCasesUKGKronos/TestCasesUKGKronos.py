@@ -7,7 +7,7 @@ class TestExcel(unittest.TestCase):
     def test_UKGK_1(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('TestCasesUKGSimplified/UKG Simplified Empty.xlsx', header=None)
+        df = pd.read_excel('TestCasesUKGKronos\TestCasesUKGKronos.py', header=None)
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 
@@ -17,7 +17,7 @@ class TestExcel(unittest.TestCase):
 
             self.fail("There are {} additional rows with data in the Excel file".format(num_data_rows))
         
-        print(".TEST 1 UKGSimplified CORRECT: The UKG Kronos Empty.xlsx file not contains additional rows to the header")
+        print(".TEST 1 UKGKronos CORRECT: The UKG Kronos Empty.xlsx file not contains additional rows to the header")
 
     def test_UKGK_2(self):
 
