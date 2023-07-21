@@ -97,6 +97,61 @@ class ExcelTestCase(unittest.TestCase):
 
         print(".TEST 3 DEFAULT CORRECT: All GLCODEs have 9 numeric digits.")
 
+    def test_default_11(self):
+        # File path and name of the Excel file
+        excel_file = 'TestCasesDefault/6-11.xlsx'
+        
+        # Sheet name in the Excel file
+        excel_sheet = 'Sheet1'
+        
+        # Names to search in the NAME column
+        names_to_search = ['Aguilar, Isabelle', 'Aguilar, Marissa']
+        
+        # Columns to check for empty values
+        columns_to_check = ['DATE', 'GLCODE', 'PAYCODE', 'STARTDTM', 'ENDDTM', 'HOURS']
+        
+        # Read the Excel file into a DataFrame
+        df = pd.read_excel(excel_file, sheet_name=excel_sheet)
+        
+        # Filter by names in the NAME column
+        filtered_df = df[df['NAME'].isin(names_to_search)]
+        
+        # Check for empty columns in the specified columns
+        empty_columns = filtered_df[filtered_df[columns_to_check].isnull().any(axis=1)]
+        
+        # Generate the error message
+        error_msg = "The following rows and columns have empty data:\n"
+        for idx, row in empty_columns.iterrows():
+            for col in columns_to_check:
+                if pd.isnull(row[col]):
+                    error_msg += f"Column: {col}, Row: {idx+2}\n"
+        
+        # Assert that there are no empty columns
+        self.assertTrue(empty_columns.empty, error_msg)
+        print(".TEST 11 DEFAULT CORRECT: All the information of the nurses are in the file.")
+    
+    def test_Default_12(self):
+        # File path and name of the Excel file
+        excel_file = 'TestCasesDefault/6-11.xlsx'
+        
+        # Sheet name in the Excel file
+        excel_sheet = 'Sheet1'
+        
+        # Name to search in the NAME column
+        name_to_search = 'Anderson, Jennifer'
+        
+        # Read the Excel file into a DataFrame
+        df = pd.read_excel(excel_file, sheet_name=excel_sheet)
+        
+        # Count the occurrences of the name in the NAME column
+        name_count = df['NAME'].value_counts().get(name_to_search, 0)
+        
+        # Check if the name appears exactly three times
+        self.assertEqual(name_count, 3, f"The name '{name_to_search}' registered {name_count} shifts, but it should registered 3 shifts.")
+        
+        # Print a message if the test passes
+        print(".TEST 12 DEFAULT CORRECT: The nurse registered in the file three shifts.")
+
 if __name__ == '__main__':
 
     unittest.main()
