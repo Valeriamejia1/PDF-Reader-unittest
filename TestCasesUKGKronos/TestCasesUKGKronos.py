@@ -52,7 +52,7 @@ class TestExcel(unittest.TestCase):
 
             print(".TEST 2 UKG Kronos CORRECT: Checked that the last line of the file Qualivis Time report PPE 062423.xlsx is still for WUISCHPARD, DAVID with the same data")
 
-    #Methods required for test_UKGK
+    #Methods required for test_UKGK4
 
     def test_UKGS_4(self):
         self.compare_excel_files("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx", "TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
@@ -92,6 +92,8 @@ class TestExcel(unittest.TestCase):
     #Descrition: Check Exe has the same data as last commit
     #Files: Qualivis Time report PPE 062423
 
+    #Methods required for test_UKGK4
+
     def verified_columns(path_file, sheet_namee, column):
         try:
             # Leer el archivo Excel en un DataFrame
@@ -125,7 +127,6 @@ class TestExcel(unittest.TestCase):
         resultado = TestExcel.verified_columns(path_file, sheet_namee, column)
         print("TEST 5 UKGKronos CORRECT: Qualivis Time report PPE 062423 CORRECT: Qualivis Time report PPE 062423.xlsx column PRIMARY JOB  is in the file")
         self.assertTrue(resultado)
-
     
     def test_UKGK_6(self):
         # Load the Excel files into pandas DataFrames
