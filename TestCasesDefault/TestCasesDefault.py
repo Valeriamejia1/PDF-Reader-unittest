@@ -339,6 +339,71 @@ class ExcelTestCase(unittest.TestCase):
         # Print a message if the test passes
         print(".TEST 12 DEFAULT CORRECT: The nurse registered in the file three shifts.")
 
+    def test_default_16(self): 
+        #Files: TestCasesDefault\6-11 Minutes.xlsx , TestCasesDefault\6-11.xlsx
+        # Descriotion: Check if the nurse has her last comment that is located in the next page
+        file_paths = ['TestCasesDefault\\6-11.xlsx', 'TestCasesDefault\\6-11 Minutes.xlsx']
+
+        # Name to search and data to verify in the 'Comments' column
+        name_to_find = 'Casey, Quentasha'
+        expected_comment = "LV"
+
+        for file_path in file_paths:
+            try:
+                # Read the Excel file and the 'Sheet1' sheet
+                df = pd.read_excel(file_path, sheet_name='Sheet1')
+
+                # Search for the name in the 'NAME' column
+                name_row = df[df['NAME'] == name_to_find]
+                if not name_row.empty:
+                    row_index = name_row.index[0+2]
+
+                    # Verify if the comment matches the expected value
+                    comment_value = df.loc[row_index, 'Comments']
+                    cleaned_comment = comment_value.strip()  # Remove leading/trailing whitespaces
+
+                    if cleaned_comment == expected_comment:
+                        print(f"TEST 16 DEFAULT CORRECT: Name and Comments are matched in file '{file_path}'.")
+                    else:
+                        print(f"TEST 16 DEFAULT INCORRECT: The comment found was '{cleaned_comment}' in file '{file_path}'.")
+                else:
+                    print(f"TEST 16 DEFAULT INCORRECT: The name '{name_to_find}' was not found in the file '{file_path}'.")
+            except pd.errors.ParserError as pe:
+                print(f"Error while parsing the file '{file_path}': {str(pe)}")
+            except FileNotFoundError as fnf:
+                print(f"Error: File '{file_path}' not found.")
+            except Exception as e:
+                print(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+
+    def test_Default_17(self): 
+        # List of files to validate
+        file_paths = ['TestCasesDefault\\6-11.xlsx', 'TestCasesDefault\\6-11 Minutes.xlsx']
+
+        # Word to search for in the 'Comments' column
+        word_to_find = 'UPO'
+
+        for file_path in file_paths:
+            try:
+                # Read the Excel file and the 'Sheet1' sheet
+                df = pd.read_excel(file_path, sheet_name='Sheet1')
+
+                # Search for the word in the 'Comments' column
+                rows_with_word = df[df['Comments'].str.contains(word_to_find, case=False, na=False)]
+
+                if not rows_with_word.empty:
+                    for index, row in rows_with_word.iterrows():
+                        row_number = index + 2  # Add 2 to index to account for 0-based indexing and header row
+                        column_name = df.columns.get_loc('Comments') + 1  # Get the column number for 'Comments'
+                        print(f"TEST 17 DEFAULT INCORRECT: Word '{word_to_find}' found in row {row_number}, column Comments in file '{file_path}'.")
+                else:
+                    print(f"TEST 17 DEFAULT CORRECT: Word is not present in the Comments column in file '{file_path}'.")
+            except pd.errors.ParserError as pe:
+                print(f"Error while parsing the file '{file_path}': {str(pe)}")
+            except FileNotFoundError as fnf:
+                print(f"Error: File '{file_path}' not found.")
+            except Exception as e:
+                print(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+
 if __name__ == '__main__':
 
     unittest.main()
