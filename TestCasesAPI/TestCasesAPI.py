@@ -62,7 +62,6 @@ class TestExcel(unittest.TestCase):
 
         print("TEST 3 API CORRECT: The value SCHED is NOT present in the PAYCODE column in the TMMC W.E. 4.22 file.")
     
-    
     def test_API_4(self):
         # Carga el archivo de Excel en un DataFrame
         df = pd.read_excel('TestCasesAPI/TMMC W.E. 4.22.xlsx', sheet_name='OutputData')

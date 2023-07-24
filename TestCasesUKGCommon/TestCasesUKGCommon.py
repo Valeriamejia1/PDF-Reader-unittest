@@ -137,7 +137,6 @@ class ExcelTest(unittest.TestCase):
 
         print("TEST 4 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the comments match those in the PDF")
 
-
     def test_UKGC_5(self):
         excel_file = "TestCasesUKGCommon/Martin ppe 4.22.23.xlsx"
         sheet_name = "Sheet1"
