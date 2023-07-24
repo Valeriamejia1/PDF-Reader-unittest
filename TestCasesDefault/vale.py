@@ -2,7 +2,11 @@ import unittest
 import pandas as pd
 
 class TestGLCode(unittest.TestCase):
-    def test_DEFAULT_7(self):
+    import unittest
+import pandas as pd
+
+class TestGLCode(unittest.TestCase):
+    def test_glcode_match(self):
         file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
         file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
         name_to_find = "Anderson, Kasey"
@@ -28,12 +32,16 @@ class TestGLCode(unittest.TestCase):
             if row["GLCODE"] not in expected_glcode:
                 errors.append(f"File: {file2}, Row: {index + 2}")
 
-        # Si hay errores, imprimirlos; de lo contrario, imprimir mensaje de éxito
+        # Si hay errores, hacer que el unittest falle con assert.fail()
         if errors:
-            for error in errors:
-                print("ERROR:", error)
-        else:
-            print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
+            assert False, "\n".join(["ERROR: " + error for error in errors])
+
+        # Si no hay errores, el unittest pasa correctamente
+        print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
+
+if __name__ == "__main__":
+    unittest.main()
+
 
 if __name__ == "__main__":
     unittest.main()
