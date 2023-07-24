@@ -1,47 +1,48 @@
 import unittest
 import pandas as pd
+import re
 
 class TestGLCode(unittest.TestCase):
-    import unittest
-import pandas as pd
+    def test_DEFAULT_12(self):
+        # Add the 'self' parameter
+        # List of file paths and sheet names to validate
+        file_data = [
+            {'file_path': 'TestCasesDefault/Time Detail_100822-102122 minutes.xlsx', 'sheet_name': 'Sheet1'},
+            {'file_path': 'TestCasesDefault/Time Detail_100822-102122.xlsx', 'sheet_name': 'Sheet1'}
+        ]
 
-class TestGLCode(unittest.TestCase):
-    def test_glcode_match(self):
-        file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
-        file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
-        name_to_find = "Anderson, Kasey"
-        expected_glcode = ["34006510", "4900-20-40"]
+        for data in file_data:
+            file_path = data['file_path']
+            sheet_name = data['sheet_name']
 
-        # Leer los archivos Excel
-        df1 = pd.read_excel(file1)
-        df2 = pd.read_excel(file2)
+            # Read the Excel file and the specified sheet
+            try:
+                df = pd.read_excel(file_path, sheet_name=sheet_name)
 
-        # Filtrar por el valor de "NAME"
-        filtered_df1 = df1[df1["NAME"] == name_to_find]
-        filtered_df2 = df2[df2["NAME"] == name_to_find]
+                # Check for missing or invalid dates
+                errors_found = False
+                error_messages = []
 
-        # Almacenar los errores encontrados
-        errors = []
+                for index, value in df['DATE'].items():
+                    if pd.isnull(value):  # Check for empty cells
+                        error_messages.append(f"{file_path} - TEST 12 DEFAULT INCORRECT: Empty cell found in row {index + 2}, column DATE.")
+                        errors_found = True
+                    else:
+                        date_str = str(value)
+                        # Use regular expression to check for valid date format 'mm/dd/yyyy' or 'dd/mm/yyyy'
+                        if not re.match(r'^(\d{1,2}/\d{1,2}/\d{4})|(\d{1,2}-\d{1,2}-\d{4})$', date_str):
+                            error_messages.append(f"TEST 12 DEFAULT INCORRECT: Invalid date format found in row {index + 2}, column DATE: '{date_str}' file: {file_path} .")
+                            errors_found = True
 
-        # Verificar que los valores de "GLCODE" coincidan con los esperados
-        for index, row in filtered_df1.iterrows():
-            if row["GLCODE"] not in expected_glcode:
-                errors.append(f"File: {file1}, Row: {index + 2}")
-
-        for index, row in filtered_df2.iterrows():
-            if row["GLCODE"] not in expected_glcode:
-                errors.append(f"File: {file2}, Row: {index + 2}")
-
-        # Si hay errores, hacer que el unittest falle con assert.fail()
-        if errors:
-            assert False, "\n".join(["ERROR: " + error for error in errors])
-
-        # Si no hay errores, el unittest pasa correctamente
-        print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
-
-if __name__ == "__main__":
-    unittest.main()
-
+                if not errors_found:
+                    print(f"TEST 12 DEFAULT CORRECT: Column Date format is correct in file '{file_path}'.")
+                else:
+                    for message in error_messages:
+                        self.fail(message)
+            except FileNotFoundError as fnf:
+                self.fail(f"Error: File '{file_path}' not found.")
+            except Exception as e:
+                self.fail(f"Unexpected error while processing the file '{file_path}': {str(e)}")
 
 if __name__ == "__main__":
     unittest.main()
