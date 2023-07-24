@@ -577,7 +577,7 @@ class ExcelTestCase(unittest.TestCase):
         
         # Assert that there are no empty columns
         self.assertTrue(empty_columns.empty, error_msg)
-        print(".TEST 11 DEFAULT CORRECT: All the information of the nurses are in the file.")
+        print(".TEST 14 DEFAULT CORRECT: All the information of the nurses are in the file.")
     
     def test_DEFAULT_15(self):
         # File path and name of the Excel file
@@ -599,7 +599,7 @@ class ExcelTestCase(unittest.TestCase):
         self.assertEqual(name_count, 3, f"The name '{name_to_search}' registered {name_count} shifts, but it should registered 3 shifts.")
         
         # Print a message if the test passes
-        print(".TEST 12 DEFAULT CORRECT: The nurse registered in the file three shifts.")
+        print(".TEST 15 DEFAULT CORRECT: The nurse registered in the file three shifts.")
 
     def test_DEFAULT_16(self):
         #Files: TestCasesDEFAULT/6-11 Minutes.xlsx , TestCasesDEFAULT/6-11.xlsx
