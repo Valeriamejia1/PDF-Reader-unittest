@@ -1,5 +1,4 @@
 import unittest
-import re
 import pandas as pd
 from openpyxl import load_workbook
 
@@ -57,85 +56,81 @@ class ExcelTestCase(unittest.TestCase):
                 message += f"File: {excel_name}, Row {row_num}: GLCODE={glcode} does not match the expected value.\n"
             self.fail(message)
         
-        print(".TEST 2 DEFAULT CORRECT: Celestin's GLCODE, Elizabeth contains - and is 3050-3001-31233")
+        print(".TEST 2 DEFAULT CORRECT: Celestin's GLCODE, contains - and is 3050-3001-31233")
 
     #Method required for test_DEFAULT_3
     
     def validar_glcode(self, glcode):
-        # Eliminar los guiones "-" y contar los dígitos restantes
+        # Remove dashes "-" and count the remaining digits.
         glcode_sin_guiones = glcode.replace('-', '')
         return len(glcode_sin_guiones) == 9 and glcode_sin_guiones.isdigit()
 
     def test_DEFAULT_3(self):
-        archivos = ["TestCasesDefault/Combined File minutes.xlsx", "TestCasesDefault/Combined File.xlsx"]
+        files = ["TestCasesDefault/Combined File minutes.xlsx", "TestCasesDefault/Combined File.xlsx"]
 
-        all_incorrect_rows = set()  # Usamos un conjunto para almacenar las filas incorrectas sin duplicados
+        all_incorrect_rows = set()  # We use a set to store the incorrect rows without duplicates
 
-        for archivo in archivos:
+        for file in files:
             try:
-                with pd.ExcelFile(archivo) as xls:
-                    sheet_name = xls.sheet_names[0]  # Asumimos que la hoja de interés es la primera
+                with pd.ExcelFile(file) as xls:
+                    sheet_name = xls.sheet_names[0]  # We assume that the sheet of interest is the first one.
 
-                    # Cargar el archivo y convertir la columna "GLCODE" al formato "text"
+                    # Load the file and convert the "GLCODE" column to "text" format.
                     df = pd.read_excel(xls, sheet_name)
                     df["GLCODE"] = df["GLCODE"].astype(str)
 
-                    # Validar que todas las celdas en la columna "GLCODE" contengan 9 dígitos sin guiones "-"
+                    # Validate that all cells in the "GLCODE" column contain 9 digits without dashes "-".
                     incorrect_rows = []
                     for index, glcode in df["GLCODE"].items():
                         if not self.validar_glcode(glcode):
-                            incorrect_rows.append((archivo, index + 2, glcode))
+                            incorrect_rows.append((file, index + 2, glcode))
 
-                    # Agregar las filas incorrectas al conjunto general
+                    # Add the incorrect rows to the general set
                     all_incorrect_rows.update(incorrect_rows)
             except Exception as e:
-                # Si ocurre una excepción, muestra el mensaje de error y registra la excepción.
-                print(f"Error al procesar el archivo {archivo}: {str(e)}")
+                # If an exception occurs, it displays the error message and logs the exception..
+                print(f"Error al procesar el file {file}: {str(e)}")
 
-        # Mostrar mensaje de fallo con todas las filas incorrectas de todos los archivos
+        # Show failure message with all incorrect rows in all files
         if all_incorrect_rows:
-            error_msg = "El GLCODE no contiene 9 digitos en las siguientes filas y archivos:\n"
-            for archivo, fila, glcode in all_incorrect_rows:
-                error_msg += f"Archivo: {archivo}, Fila: {fila}, GLCODE: {glcode}\n"
+            error_msg = "The GLCODE does not contain 9 digits in the following rows and files:\n"
+            for file, row, glcode in all_incorrect_rows:
+                error_msg += f"file: {file}, row: {row}, GLCODE: {glcode}\n"
             self.fail(error_msg)
 
         print(".TEST 3 DEFAULT CORRECT: All GLCODEs have 9 numeric digits.")
-
-
-
-
     
     def test_Default_4_1(self):
 
         files = ["TestCasesDefault/6-11.xlsx", "TestCasesDefault/6-11 Minutes.xlsx"]
 
-        all_errors = []  # Lista para almacenar todos los errores encontrados
+        all_errors = []  # List to store all the errors found
 
-        for archivo in files:
-            xls = pd.ExcelFile(archivo)
-            sheet_name = xls.sheet_names[0]  # Asumimos que la hoja de interés es la primera
+        for file in files:
+            xls = pd.ExcelFile(file)
+            sheet_name = xls.sheet_names[0]  # We assume that the sheet of interest is the first one.
 
-            # Cargar el archivo y filtrar por "Attaway, Brooke" en la columna "NAME"
+            # Load the file and filter by "Attaway, Brooke" in the column "NAME".
             df = pd.read_excel(xls, sheet_name)
             brooke_df = df[df["NAME"] == "Attaway, Brooke"]
 
-            # Verificar que en la columna "GLCODE" esté alguno de los valores esperados
+            # Check that the "GLCODE" column contains one of the expected values.
             incorrect_rows = []
             for index, row in brooke_df.iterrows():
                 glcode = str(row["GLCODE"])
                 if glcode not in ["6142", "006142"]:
-                    incorrect_rows.append((archivo, index + 2, glcode))
+                    incorrect_rows.append((file, index + 2, glcode))
 
-            # Agregar los errores al listado general
+            # Add errors to the general list
             all_errors.extend(incorrect_rows)
 
-            xls.close()  # Cerrar el archivo después de leerlo
+            xls.close()  # Close the file after reading it
 
-        # Mostrar mensaje de fallo con todos los errores encontrados
+        # Display error message with all errors encountered
         if all_errors:
             error_msg = "Errores para Attaway, Brooke:\n"
-            for archivo, fila, glcode in all_errors:
-                error_msg += f"Archivo: {archivo}, Fila: {fila}, GLCODE: {glcode}\n"
+            for file, row, glcode in all_errors:
+                error_msg += f"file: {file}, row: {row}, GLCODE: {glcode}\n"
             self.fail(error_msg)
 
         print("TEST 4.1 DEFAULT CORRECT: FILE TEST 6-11 BROOKE CORRECT: All GLCODEs for Brooke are valid.")
@@ -143,33 +138,33 @@ class ExcelTestCase(unittest.TestCase):
     def test_Default_4_2(self):    
         files = ["TestCasesDefault/6-11.xlsx", "TestCasesDefault/6-11 Minutes.xlsx"]
 
-        all_errors = []  # Lista para almacenar todos los errores encontrados
+        all_errors = []  # List for storing all errors found
 
-        for archivo in files:
-            xls = pd.ExcelFile(archivo)
-            sheet_name = xls.sheet_names[0]  # Asumimos que la hoja de interés es la primera
+        for file in files:
+            xls = pd.ExcelFile(file)
+            sheet_name = xls.sheet_names[0]  # We assume that the sheet of interest is the first one.
 
-            # Cargar el archivo y filtrar por "Barr, Brieann" en la columna "NAME"
+            # Load the file and filter by "Barr, Brieann" in the column "NAME".
             df = pd.read_excel(xls, sheet_name)
             brieann_df = df[df["NAME"] == "Barr, Brieann"]
 
-            # Verificar que en la columna "GLCODE" esté alguno de los valores esperados
+            # Check that the "GLCODE" column contains one of the expected values.
             incorrect_rows = []
             for index, row in brieann_df.iterrows():
                 glcode = str(row["GLCODE"])
                 if glcode not in ["007317", "6402", "7317"]:
-                    incorrect_rows.append((archivo, index + 2, glcode))
+                    incorrect_rows.append((file, index + 2, glcode))
 
-            # Agregar los errores al listado general
+            # Add errors to the general list
             all_errors.extend(incorrect_rows)
 
-            xls.close()  # Cerrar el archivo después de leerlo
+            xls.close()  # Close the file after reading it
 
-        # Mostrar mensaje de fallo con todos los errores encontrados
+        # Display error message with all errors encountered
         if all_errors:
-            error_msg = "Errores para Barr, Brieann:\n"
-            for archivo, fila, glcode in all_errors:
-                error_msg += f"Archivo: {archivo}, Fila: {fila}, GLCODE: {glcode}\n"
+            error_msg = "Errors forBarr, Brieann:\n"
+            for file, row, glcode in all_errors:
+                error_msg += f"file: {file}, row: {row}, GLCODE: {glcode}\n"
             self.fail(error_msg)
 
         print("TEST 4.2 DEFAULT CORRECT: FILE TEST 6-11 BRIEANN CORRECT: All GLCODEs for Brieann are valid.")
@@ -252,7 +247,44 @@ class ExcelTestCase(unittest.TestCase):
             
             print(".TEST 5.2 DEFAULT CORRECT: Hannas's GLCODE contains . and is 1110.2115.1057")
 
-    def test_default_11(self):
+    def test_DEFAULT_6(self):
+        files = ["TestCasesDefault/Kronos Timecards TC 07-30-22.xlsx", "TestCasesDefault/Kronos Timecards TC 07-30-22 minutes.xlsx"]
+
+        all_errors = []  # List to store all the errors found
+
+        for file in files:
+            try:
+                xls = pd.ExcelFile(file)
+                sheet_name = xls.sheet_names[0]  # We assume that the sheet of interest is the first one.
+
+                # Load the file and filter by "AMBURN, SARAH" and "ATKINS, CARA" in the column "NAME".
+                df = pd.read_excel(xls, sheet_name)
+                filtered_df = df[df["NAME"].isin(["AMBURN, SARAH", "ATKINS, CARA"])]
+
+                # Check that the "GLCODE" column contains the expected value "95221046530001".
+                incorrect_rows = []
+                for index, row in filtered_df.iterrows():
+                    glcode = str(row["GLCODE"])
+                    if glcode != "95221046530001":
+                        incorrect_rows.append((file, index + 2, glcode))
+
+                # Add errors to the general list
+                all_errors.extend(incorrect_rows)
+
+                xls.close()  # Close the file after reading it
+            except Exception as e:
+                self.fail(f"Error reading {file}: {str(e)}")
+
+        # Display error message with all errors encountered
+        if all_errors:
+            error_msg = "Errors for AMBURN, SARAH and ATKINS, CARA:\n"
+            for file, row, glcode in all_errors:
+                error_msg += f"file: {file}, row: {row}, GLCODE: {glcode}\n"
+            self.fail(error_msg)
+
+        print("TEST 6 DEFAULT CORRECT: The GLCODE of AMBURN, SARAH ; ATKINS, CARA match the expected value and have 14 digits.")
+
+    def test_default_14(self):
         # File path and name of the Excel file
         excel_file = 'TestCasesDefault/6-11.xlsx'
         
@@ -285,7 +317,7 @@ class ExcelTestCase(unittest.TestCase):
         self.assertTrue(empty_columns.empty, error_msg)
         print(".TEST 11 DEFAULT CORRECT: All the information of the nurses are in the file.")
     
-    def test_Default_12(self):
+    def test_Default_15(self):
         # File path and name of the Excel file
         excel_file = 'TestCasesDefault/6-11.xlsx'
         
