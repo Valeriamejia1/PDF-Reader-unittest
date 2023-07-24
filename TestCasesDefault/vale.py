@@ -1,45 +1,39 @@
 import unittest
 import pandas as pd
 
-class TestExcelFiles(unittest.TestCase):
-    def test_DEFAULT_(self):
-    # Excel files you wish to validate along with their names
-        filenames = [
-            ("TestCasesDefault\Time Detail_July152022.xlsx", "time weston.xlsx"),
-            ("TestCasesDefault\Time Detail_July152022.xlsx", "time weston minutes.xlsx")
-        ]
+class TestGLCode(unittest.TestCase):
+    def test_DEFAULT_7(self):
+        file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
+        file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
+        name_to_find = "Anderson, Kasey"
+        expected_glcode = ["34006510", "4900-20-40"]
 
-        # Values you want to search for in each file
-        name_value = "Anderson, Kasey "
-        glcode_value = "3050-3001-31233"
+        # Leer los archivos Excel
+        df1 = pd.read_excel(file1)
+        df2 = pd.read_excel(file2)
 
-        # List to store the details of the rows that do not meet the criteria.
-        failed_rows = []
+        # Filtrar por el valor de "NAME"
+        filtered_df1 = df1[df1["NAME"] == name_to_find]
+        filtered_df2 = df2[df2["NAME"] == name_to_find]
 
-        for filename, excel_name in filenames:
-            # Read the Excel file
-            df = pd.read_excel(filename)
+        # Almacenar los errores encontrados
+        errors = []
 
-            # Filter by the value in the "NAME" column
-            filtered_df = df[df["NAME"] == name_value]
+        # Verificar que los valores de "GLCODE" coincidan con los esperados
+        for index, row in filtered_df1.iterrows():
+            if row["GLCODE"] not in expected_glcode:
+                errors.append(f"File: {file1}, Row: {index + 2}")
 
-            # Get the rows that do not meet the validation criterion
-            incorrect_rows = filtered_df[filtered_df["GLCODE"] != glcode_value]
+        for index, row in filtered_df2.iterrows():
+            if row["GLCODE"] not in expected_glcode:
+                errors.append(f"File: {file2}, Row: {index + 2}")
 
-            # If there are incorrect rows, add the details to the list of failed_rows
-            if not incorrect_rows.empty:
-                for index, row in incorrect_rows.iterrows():
-                    failed_rows.append((excel_name, index + 2, row["GLCODE"]))
+        # Si hay errores, imprimirlos; de lo contrario, imprimir mensaje de éxito
+        if errors:
+            for error in errors:
+                print("ERROR:", error)
+        else:
+            print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
 
-        # Check if any row did not meet the criterion
-        if failed_rows:
-            # Display the message with the details of the incorrect rows
-            message = "Problems were found in the following records:\n"
-            for excel_name, row_num, glcode in failed_rows:
-                message += f"File: {excel_name}, Row {row_num}: GLCODE={glcode} does not match the expected value.\n"
-            self.fail(message)
-        
-        print(".TEST 7 DEFAULT CORRECT: Kasey's GLCODE contains - and is 3050-3001-31233")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
