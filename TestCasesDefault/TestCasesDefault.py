@@ -1,6 +1,7 @@
 import unittest
 import pandas as pd
 from openpyxl import load_workbook
+import re
 
 class ExcelTestCase(unittest.TestCase):
 
@@ -317,6 +318,41 @@ class ExcelTestCase(unittest.TestCase):
         else:
             print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
 
+    def test_date_format(self):  # Add the 'self' parameter
+        # File path and sheet name
+        file_path = 'TestCasesDefault/Scripps Approved Kronos we 6.25.22.xlsx'
+        sheet_name = 'Sheet1'
+
+        # Read the Excel file and the specified sheet
+        try:
+            df = pd.read_excel(file_path, sheet_name=sheet_name)
+
+            # Check for missing or invalid dates
+            errors_found = False
+            error_messages = []
+
+            for index, value in df['DATE'].items():
+                if pd.isnull(value):  # Check for empty cells
+                    error_messages.append(f"TEST 9 DEFAULT INCORRECT: Empty cell found in row {index + 2}, column DATE.")
+                    errors_found = True
+                else:
+                    date_str = str(value)
+                    # Use regular expression to check for valid date format 'mm/dd/yyyy' or 'dd/mm/yyyy'
+                    if not re.match(r'^(\d{1,2}/\d{1,2}/\d{4})|(\d{1,2}-\d{1,2}-\d{4})$', date_str):
+                        error_messages.append(f"TEST 9 DEFAULT INCORRECT: Invalid date format found in row {index + 2}, column DATE: '{date_str}'.")
+                        errors_found = True
+
+            if not errors_found:
+                print(f"TEST 9 DEFAULT CORRECT: Column Date format is correct in file '{file_path}'.")
+            else:
+                for message in error_messages:
+                    self.fail(message)
+        except FileNotFoundError as fnf:
+            self.fail(f"Error: File '{file_path}' not found.")
+        except Exception as e:
+            self.fail(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+
+
     def test_default_14(self):
         # File path and name of the Excel file
         excel_file = 'TestCasesDefault/6-11.xlsx'
@@ -398,19 +434,20 @@ class ExcelTestCase(unittest.TestCase):
                     if cleaned_comment == expected_comment:
                         print(f"TEST 16 DEFAULT CORRECT: Name and Comments are matched in file '{file_path}'.")
                     else:
-                        print(f"TEST 16 DEFAULT INCORRECT: The comment found was '{cleaned_comment}' in file '{file_path}'.")
+                        self.fail(f"TEST 16 DEFAULT INCORRECT: The comment found was '{cleaned_comment}' in file '{file_path}'.")
                 else:
-                    print(f"TEST 16 DEFAULT INCORRECT: The name '{name_to_find}' was not found in the file '{file_path}'.")
+                    self.fail(f"TEST 16 DEFAULT INCORRECT: The name '{name_to_find}' was not found in the file '{file_path}'.")
             except pd.errors.ParserError as pe:
-                print(f"Error while parsing the file '{file_path}': {str(pe)}")
+                self.fail(f"Error while parsing the file '{file_path}': {str(pe)}")
             except FileNotFoundError as fnf:
-                print(f"Error: File '{file_path}' not found.")
+                self.fail(f"Error: File '{file_path}' not found.")
             except Exception as e:
-                print(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+                self.fail(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+
 
     def test_Default_17(self): 
         # List of files to validate
-        file_paths = ['TestCasesDefault\\6-11.xlsx', 'TestCasesDefault\\6-11 Minutes.xlsx']
+        file_paths = ['TestCasesDefault/6-11.xlsx', 'TestCasesDefault/6-11 Minutes.xlsx']
 
         # Word to search for in the 'Comments' column
         word_to_find = 'UPO'
@@ -427,15 +464,16 @@ class ExcelTestCase(unittest.TestCase):
                     for index, row in rows_with_word.iterrows():
                         row_number = index + 2  # Add 2 to index to account for 0-based indexing and header row
                         column_name = df.columns.get_loc('Comments') + 1  # Get the column number for 'Comments'
-                        print(f"TEST 17 DEFAULT INCORRECT: Word '{word_to_find}' found in row {row_number}, column Comments in file '{file_path}'.")
+                        self.fail(f"TEST 17 DEFAULT INCORRECT: Word '{word_to_find}' found in row {row_number}, column Comments in file '{file_path}'.")
                 else:
                     print(f"TEST 17 DEFAULT CORRECT: Word is not present in the Comments column in file '{file_path}'.")
             except pd.errors.ParserError as pe:
-                print(f"Error while parsing the file '{file_path}': {str(pe)}")
+                self.fail(f"Error while parsing the file '{file_path}': {str(pe)}")
             except FileNotFoundError as fnf:
-                print(f"Error: File '{file_path}' not found.")
+                self.fail(f"Error: File '{file_path}' not found.")
             except Exception as e:
-                print(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+                self.fail(f"Unexpected error while processing the file '{file_path}': {str(e)}")
+
 
 if __name__ == '__main__':
 
