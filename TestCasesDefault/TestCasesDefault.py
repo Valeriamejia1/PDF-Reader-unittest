@@ -284,6 +284,39 @@ class ExcelTestCase(unittest.TestCase):
 
         print("TEST 6 DEFAULT CORRECT: The GLCODE of AMBURN, SARAH ; ATKINS, CARA match the expected value and have 14 digits.")
 
+    def test_DEFAULT_7(self):
+        file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
+        file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
+        name_to_find = "Anderson, Kasey"
+        expected_glcode = ["34006510", "4900-20-40", "4900"]
+
+        # Leer los archivos Excel
+        df1 = pd.read_excel(file1)
+        df2 = pd.read_excel(file2)
+
+        # Filtrar por el valor de "NAME"
+        filtered_df1 = df1[df1["NAME"] == name_to_find]
+        filtered_df2 = df2[df2["NAME"] == name_to_find]
+
+        # Almacenar los errores encontrados
+        errors = []
+
+        # Verificar que los valores de "GLCODE" coincidan con los esperados
+        for index, row in filtered_df1.iterrows():
+            if row["GLCODE"] not in expected_glcode:
+                errors.append(f"File: {file1}, Row: {index + 2}")
+
+        for index, row in filtered_df2.iterrows():
+            if row["GLCODE"] not in expected_glcode:
+                errors.append(f"File: {file2}, Row: {index + 2}")
+
+        # Si hay errores, imprimirlos; de lo contrario, imprimir mensaje de éxito
+        if errors:
+            for error in errors:
+                print("TEST 7 DEFAULT ERROR WITH GL CODE for Anderson, Kasey:", error)
+        else:
+            print("TEST 7 DEFAULT CORRECT: The GLCODE of Anderson, Kasey match the expected value")
+
     def test_default_14(self):
         # File path and name of the Excel file
         excel_file = 'TestCasesDefault/6-11.xlsx'
