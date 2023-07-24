@@ -363,7 +363,6 @@ class ExcelTestCase(unittest.TestCase):
             self.fail(error_message)
         else:
             if correct_files:
-                correct_file_message = "\n".join(correct_files)
                 print(f"TEST 10 DEFAULT CORRECT: Column Date format is correct in both files Scripps Approved Kronos we 6.25.22")
 
     def test_DEFAULT_12(self):
@@ -412,7 +411,6 @@ class ExcelTestCase(unittest.TestCase):
             self.fail(error_message)
         else:
             if correct_files:
-                correct_file_message = "\n".join(correct_files)
                 print(f"TEST 12 DEFAULT CORRECT: Column Date format is correct in both files Time Detail_100822-102122")
 
     def test_DEFAULT_14(self):
