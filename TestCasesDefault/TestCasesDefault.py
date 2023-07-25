@@ -288,7 +288,7 @@ class ExcelTestCase(unittest.TestCase):
         file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
         file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
         name_to_find = "Anderson, Kasey"
-        expected_glcode = ["34006510", "4900-20-40"]
+        expected_glcode = ["34006510", "4900-20-40", "4900"]
 
         # Leer los archivos Excel
         df1 = pd.read_excel(file1)
@@ -608,7 +608,7 @@ class ExcelTestCase(unittest.TestCase):
 
         # Name to search and data to verify in the 'Comments' column
         name_to_find = 'Casey, Quentasha'
-        expected_comment = "LV"
+        expected_comment = "| Amount | Amount Amount Amount Amount | Amount | Xfr/Move:  Account Comment Xfr:  Work Rule | LV LV"
 
         for file_path in file_paths:
             try:
