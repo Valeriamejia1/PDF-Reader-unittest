@@ -22,8 +22,8 @@ class ExcelTestCase(unittest.TestCase):
     def test_DEFAULT_2(self):
     # Excel files you wish to validate along with their names
         filenames = [
-            ("TestCasesDEFAULT/time weston.xlsx", "time weston.xlsx"),
-            ("TestCasesDEFAULT/time weston minutes.xlsx", "time weston minutes.xlsx")
+            ("TestCasesDefault/time weston minutes.xlsx", "time weston.xlsx"),
+            ("TestCasesDefault/time weston minutes.xlsx", "time weston minutes.xlsx")
         ]
 
         # Values you want to search for in each file
@@ -66,7 +66,7 @@ class ExcelTestCase(unittest.TestCase):
         return len(glcode_sin_guiones) == 9 and glcode_sin_guiones.isdigit()
 
     def test_DEFAULT_3(self):
-        files = ["TestCasesDEFAULT/Combined File minutes.xlsx", "TestCasesDEFAULT/Combined File.xlsx"]
+        files = ["TestCasesDefault/Combined File minutes.xlsx", "TestCasesDefault/Combined File.xlsx"]
 
         all_incorrect_rows = set()  # We use a set to store the incorrect rows without duplicates
 
@@ -102,7 +102,7 @@ class ExcelTestCase(unittest.TestCase):
     
     def test_DEFAULT_4_1(self):
 
-        files = ["TestCasesDEFAULT/6-11.xlsx", "TestCasesDEFAULT/6-11 Minutes.xlsx"]
+        files = ["TestCasesDefault/6-11 Minutes.xlsx", "/6-11 Minutes.xlsx"]
 
         all_errors = []  # List to store all the errors found
 
@@ -136,7 +136,7 @@ class ExcelTestCase(unittest.TestCase):
         print("TEST 4.1 DEFAULT CORRECT: FILE TEST 6-11 BROOKE CORRECT: All GLCODEs for Brooke are valid.")
 
     def test_DEFAULT_4_2(self):
-        files = ["TestCasesDEFAULT/6-11.xlsx", "TestCasesDEFAULT/6-11 Minutes.xlsx"]
+        files = ["TestCasesDefault/6-11.xlsx", "TestCasesDefault/6-11 Minutes.xlsx"]
 
         all_errors = []  # List for storing all errors found
 
@@ -172,8 +172,8 @@ class ExcelTestCase(unittest.TestCase):
     def test_DEFAULT_5_1(self):
     # Excel files you wish to validate along with their names
         filenames = [
-            ("TestCasesDEFAULT/1667243700213_980358248.xlsx", "1667243700213_980358248.xlsx"),
-            ("TestCasesDEFAULT/1667243700213_980358248 minutes.xlsx", "1667243700213_980358248 minutes.xlsx")
+            ("TestCasesDefault/1667243700213_980358248.xlsx", "1667243700213_980358248.xlsx"),
+            ("TestCasesDefault/1667243700213_980358248 minutes.xlsx", "1667243700213_980358248 minutes.xlsx")
         ]
 
         # Values you want to search for in each file
@@ -211,8 +211,8 @@ class ExcelTestCase(unittest.TestCase):
     def test_DEFAULT_5_2(self):
         # Excel files you wish to validate along with their names
             filenames = [
-                ("TestCasesDEFAULT/1667243700213_980358248.xlsx", "1667243700213_980358248.xlsx"),
-                ("TestCasesDEFAULT/1667243700213_980358248 minutes.xlsx", "1667243700213_980358248 minutes.xlsx")
+                ("TestCasesDefault/1667243700213_980358248.xlsx", "1667243700213_980358248.xlsx"),
+                ("TestCasesDefault/1667243700213_980358248 minutes.xlsx", "1667243700213_980358248 minutes.xlsx")
             ]
 
             # Values you want to search for in each file
@@ -248,7 +248,7 @@ class ExcelTestCase(unittest.TestCase):
             print(".TEST 5.2 DEFAULT CORRECT: Hannas's GLCODE contains . and is 1110.2115.1057")
 
     def test_DEFAULT_6(self):
-        files = ["TestCasesDEFAULT/Kronos Timecards TC 07-30-22.xlsx", "TestCasesDEFAULT/Kronos Timecards TC 07-30-22 minutes.xlsx"]
+        files = ["TestCasesDefault/Kronos Timecards TC 07-30-22.xlsx", "TestCasesDefault/Kronos Timecards TC 07-30-22 minutes.xlsx"]
 
         all_errors = []  # List to store all the errors found
 
@@ -320,7 +320,7 @@ class ExcelTestCase(unittest.TestCase):
     def test_Default_9(self): 
         # Files to validate
         # Desc: Date without + or -
-        file_paths = ['TestCasesDEFAULT/Aya-WE 8.28.22.xlsx', 'TestCasesDEFAULT/Aya-WE 8.28.22 Minutes.xlsx']
+        file_paths = ['TestCasesDefault/Aya-WE 8.28.22.xlsx', 'TestCasesDefault/Aya-WE 8.28.22 Minutes.xlsx']
         sheet_name = 'Sheet1'
 
         # Regular expression to check for valid date format 'mm/dd/yyyy' and to detect '+' or '-' symbols
@@ -409,7 +409,7 @@ class ExcelTestCase(unittest.TestCase):
     def test_default_11(self): 
         # Files to validate
         #Desc: Date with Dash needs to be display
-        file_paths = ['TestCasesDEFAULT/Scripps Approved Kronos we 6.25.22 minutes.xlsx', 'TestCasesDEFAULT/Scripps Approved Kronos we 6.25.22.xlsx']
+        file_paths = ['TestCasesDefault/Scripps Approved Kronos we 6.25.22 minutes.xlsx', 'TestCasesDefault/Scripps Approved Kronos we 6.25.22.xlsx']
         sheet_name = 'Sheet1'
 
         # Regular expression to check for valid date format 'mm/dd/yyyy' and to detect '+' or '-' symbols
@@ -548,7 +548,7 @@ class ExcelTestCase(unittest.TestCase):
 
     def test_DEFAULT_14(self):
         # File path and name of the Excel file
-        excel_file = 'TestCasesDEFAULT/6-11.xlsx'
+        excel_file = 'TestCasesDefault/6-11.xlsx'
         
         # Sheet name in the Excel file
         excel_sheet = 'Sheet1'
@@ -581,7 +581,7 @@ class ExcelTestCase(unittest.TestCase):
     
     def test_DEFAULT_15(self):
         # File path and name of the Excel file
-        excel_file = 'TestCasesDEFAULT/6-11.xlsx'
+        excel_file = 'TestCasesDefault/6-11.xlsx'
         
         # Sheet name in the Excel file
         excel_sheet = 'Sheet1'
@@ -602,9 +602,9 @@ class ExcelTestCase(unittest.TestCase):
         print(".TEST 15 DEFAULT CORRECT: The nurse registered in the file three shifts.")
 
     def test_DEFAULT_16(self):
-        #Files: TestCasesDEFAULT/6-11 Minutes.xlsx , TestCasesDEFAULT/6-11.xlsx
+        #Files: TestCasesDefault/6-11 Minutes.xlsx , TestCasesDefault/6-11.xlsx
         # Descriotion: Check if the nurse has her last comment that is located in the next page
-        file_paths = ['TestCasesDEFAULT/6-11.xlsx', 'TestCasesDEFAULT/6-11 Minutes.xlsx']
+        file_paths = ['TestCasesDefault/6-11.xlsx', 'TestCasesDefault/6-11 Minutes.xlsx']
 
         # Name to search and data to verify in the 'Comments' column
         name_to_find = 'Casey, Quentasha'
@@ -639,7 +639,7 @@ class ExcelTestCase(unittest.TestCase):
 
     def test_DEFAULT_17(self):
         # List of files to validate
-        file_paths = ['TestCasesDEFAULT/6-11.xlsx', 'TestCasesDEFAULT/6-11 Minutes.xlsx']
+        file_paths = ['TestCasesDefault/6-11.xlsx', 'TestCasesDefault/6-11 Minutes.xlsx']
 
         # Word to search for in the 'Comments' column
         word_to_find = 'UPO'
