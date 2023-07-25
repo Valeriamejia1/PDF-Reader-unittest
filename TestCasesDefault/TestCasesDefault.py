@@ -102,7 +102,7 @@ class ExcelTestCase(unittest.TestCase):
     
     def test_DEFAULT_4_1(self):
 
-        files = ["TestCasesDefault/6-11 Minutes.xlsx", "/6-11 Minutes.xlsx"]
+        files = ["TestCasesDefault/6-11 Minutes.xlsx", "TestCasesDefault/6-11.xlsx"]
 
         all_errors = []  # List to store all the errors found
 
