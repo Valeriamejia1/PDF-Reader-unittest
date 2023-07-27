@@ -20,7 +20,7 @@ def suma_de_dos_numeros():
         print("Error: Asegúrate de ingresar números válidos.")
 
 # Llamar a la función para ejecutarla
-suma_de_dos_numeros()
+
 
 
 
@@ -29,5 +29,5 @@ suma_de_dos_numeros()
 if __name__ == "__main__":
     imprimir_hello_world()
     imprimir_test()
-
+    suma_de_dos_numeros()
 
