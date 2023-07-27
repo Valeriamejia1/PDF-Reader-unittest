@@ -1,14 +1,11 @@
-def imprimir_hello_world():
-    print("Hello, World!\n")
+import os
+import sys
 
-def imprimir_test():
-    print("test\n")
-
-def suma_de_dos_Numeros():
+def suma_de_dos_Numeros(Numero1, Numero2):
     try:
-        # Pedir al usuario que ingrese los dos números
-        Numero1 = float(input("Ingresa el primer número: "))
-        Numero2 = float(input("Ingresa el segundo número: "))
+        # Convertir los valores ingresados a float
+        Numero1 = float(Numero1)
+        Numero2 = float(Numero2)
 
         # Sumar los dos números ingresados
         suma = Numero1 + Numero2
@@ -19,9 +16,14 @@ def suma_de_dos_Numeros():
     except ValueError:
         print("Error: Asegúrate de ingresar números válidos.")
 
-# Llamamos a la función para imprimir el mensaje
 if __name__ == "__main__":
-    imprimir_hello_world()
-    imprimir_test()
-    suma_de_dos_Numeros()
+    # Verificar si se proporcionaron suficientes argumentos
+    if len(sys.argv) == 3:
+        # Obtener los valores de los números de los argumentos
+        Numero1 = sys.argv[1]
+        Numero2 = sys.argv[2]
 
+        # Llamar a la función con los valores proporcionados
+        suma_de_dos_Numeros(Numero1, Numero2)
+    else:
+        print("Error: Se esperan dos argumentos. Ejemplo: python mi_script.py 5 10")
