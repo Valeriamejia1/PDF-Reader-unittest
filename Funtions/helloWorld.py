@@ -1,6 +1,9 @@
 import os
 import sys
 
+def imprimir_hello_world():
+    print("Hello, World!\n")
+
 def suma_de_dos_Numeros(Numero1, Numero2):
     try:
         # Convertir los valores ingresados a float
