@@ -4,7 +4,7 @@ def imprimir_hello_world():
 def imprimir_test():
     print("test\n")
 
-def suma_de_dos_Numeros(Numero1, Numero2):
+def suma_de_dos_Numeros():
     try:
         # Pedir al usuario que ingrese los dos números
         Numero1 = float(input("Ingresa el primer número: "))
