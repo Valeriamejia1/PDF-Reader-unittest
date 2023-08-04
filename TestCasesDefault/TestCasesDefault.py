@@ -7,7 +7,7 @@ class ExcelTestCase(unittest.TestCase):
     def test_DEFAULT_1(self):
         #Loads the Excel file into a DataFram
         #df = pd.read_excel('TestCasesDefault/Default Empty.xlsx', header=None)
-        df = pd.read_excel('TesFileRodri/Default Empty.xlsx', header=None)
+        df = pd.read_excel('Default Empty.xlsx', header=None)
 
         #jenkins_workspace_url = "http://ec2-3-89-243-39.compute-1.amazonaws.com:8080/job/TesFileRodri/ws/Default%20Empty.xlsx"
         #df = pd.read_excel(jenkins_workspace_url, header=None)
