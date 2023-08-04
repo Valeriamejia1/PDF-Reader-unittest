@@ -9,7 +9,7 @@ class ExcelTestCase(unittest.TestCase):
         # Loads the Excel file into a DataFram
         #df = pd.read_excel('TestCasesDefault/Default Empty.xlsx', header=None)
 
-        jenkins_workspace_url = "http://ec2-3-89-243-39.compute-1.amazonaws.com:8080/job/TesFileRodri/ws/TestCasesDefault/Default%20Empty.xlsx"
+        jenkins_workspace_url = "http://ec2-3-89-243-39.compute-1.amazonaws.com:8080/job/TesFileRodri/ws/TestCasesDefault/Default%20Empt.xlsx"
         df = pd.read_excel(jenkins_workspace_url, header=None)
 
         # Gets the number of rows with data beyond the headers
