@@ -6,8 +6,8 @@ class ExcelTestCase(unittest.TestCase):
 
     def test_DEFAULT_1(self):
         #Loads the Excel file into a DataFram
-        #df = pd.read_excel('TestCasesDefault/Default Empty.xlsx', header=None)
-        df = pd.read_excel('Default Empty.xlsx', header=None)
+        df = pd.read_excel('TestCasesDefault/Default Empty.xlsx', header=None)
+        #df = pd.read_excel('Default Empty.xlsx', header=None)
 
         #jenkins_workspace_url = "http://ec2-3-89-243-39.compute-1.amazonaws.com:8080/job/TesFileRodri/ws/DefaultEmpty.xlsx"
         #df = pd.read_excel(jenkins_workspace_url, header=None)
@@ -288,10 +288,10 @@ class ExcelTestCase(unittest.TestCase):
         print("TEST 6 DEFAULT CORRECT: The GLCODE of AMBURN, SARAH ; ATKINS, CARA match the expected value and have 14 digits.")
 
     def test_DEFAULT_7(self):
-        file1 = "TestCasesDefault/Time Detail_July152022 minutes.xlsx"
-        file2 = "TestCasesDefault/Time Detail_July152022.xlsx"
+        file1 = "OUTPUT Default\Time Detail_July152022 minutes.xlsx"
+        file2 = "OUTPUT Default\Time Detail_July152022.xlsx"
         name_to_find = "Anderson, Kasey"
-        expected_glcode = ["34006510", "4900-20-40"]
+        expected_glcode = ["34006510", "4900 20 40"]
 
         # Leer los archivos Excel
         df1 = pd.read_excel(file1)
@@ -669,6 +669,97 @@ class ExcelTestCase(unittest.TestCase):
             except Exception as e:
                 self.fail(f"Unexpected error while processing the file '{file_path}': {str(e)}")
 
+    def test_DEFAULT_18(self):
+        file_paths = [
+            "OUTPUT Default/6-11.xlsx",
+            "OUTPUT Default/6-11 minutes.xlsx"        ]
+        
+        all_errors = []
+        
+        for file_path in file_paths:
+            xls = pd.ExcelFile(file_path)
+            sheet_names = xls.sheet_names
+            
+            for sheet_name in sheet_names:
+                df = pd.read_excel(xls, sheet_name)
+                
+                if 'GLCODE' in df.columns:
+                    glcode_col = df['GLCODE']
+                    empty_cells = glcode_col.index[glcode_col.isnull()]
+                    for empty_cell_index in empty_cells:
+                        row_num = empty_cell_index + 2  # Adding 2 because DataFrame index starts from 0 and Excel rows start from 1
+                        error_msg = f"A blank cell was found in the GLCODE column of the file. '{file_path}' in row {row_num}."
+                        all_errors.append(error_msg)
+                else:
+                    error_msg = f"GLCODE column of the file was not found. '{file_path}'."
+                    all_errors.append(error_msg)
+        
+        if all_errors:
+            self.fail('\n'.join(all_errors))
+
+        print(f"TEST 18 DEFAULT CORRECT: The GLCODE column is complete")
+
+    def test_DEFAULT_19_1(self):
+        file_paths = [
+            "OUTPUT Default/1690808400472_1671940182.xlsx",
+            "OUTPUT Default/1690808400472_1671940182 Minutes.xlsx"
+        ]
+        
+        expected_glcode_count = 112
+        all_errors = []
+        
+        for file_path in file_paths:
+            xls = pd.ExcelFile(file_path)
+            sheet_names = xls.sheet_names
+            
+            for sheet_name in sheet_names:
+                df = pd.read_excel(xls, sheet_name)
+                
+                if 'GLCODE' in df.columns:
+                    glcode_col = df['GLCODE']
+                    glcode_count = glcode_col.count()
+                    if glcode_count != expected_glcode_count:
+                        error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                        all_errors.append(error_msg)
+                else:
+                    error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
+                    all_errors.append(error_msg)
+
+        if all_errors:
+            self.fail('\n'.join(all_errors))
+        else:
+            print("TEST 19_1 DEFAULT CORRECT: The files have only the expected number of GLCODE cells.")   
+
+    def test_DEFAULT_19_2(self):
+        file_paths = [
+            "OUTPUT Default/1690203601050_1994364726.xlsx",
+            "OUTPUT Default/1690203601050_1994364726 Minutes.xlsx"
+        ]
+        
+        expected_glcode_count = 276
+        all_errors = []
+        
+        for file_path in file_paths:
+            xls = pd.ExcelFile(file_path)
+            sheet_names = xls.sheet_names
+            
+            for sheet_name in sheet_names:
+                df = pd.read_excel(xls, sheet_name)
+                
+                if 'GLCODE' in df.columns:
+                    glcode_col = df['GLCODE']
+                    glcode_count = glcode_col.count()
+                    if glcode_count != expected_glcode_count:
+                        error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                        all_errors.append(error_msg)
+                else:
+                    error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
+                    all_errors.append(error_msg)
+
+        if all_errors:
+            self.fail('\n'.join(all_errors))
+        else:
+            print("TEST 19_2 DEFAULT CORRECT: The files have only the expected number of GLCODE cells.")  
 
 if __name__ == '__main__':
 
