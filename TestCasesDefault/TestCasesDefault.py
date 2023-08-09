@@ -1,6 +1,8 @@
 import unittest
 import pandas as pd
 import re
+from dateutil.parser import parse
+import warnings
 
 class ExcelTestCase(unittest.TestCase):
 
@@ -759,8 +761,107 @@ class ExcelTestCase(unittest.TestCase):
         if all_errors:
             self.fail('\n'.join(all_errors))
         else:
-            print("TEST 19_2 DEFAULT CORRECT: The files have only the expected number of GLCODE cells.")  
+            print("TEST 19_2 DEFAULT CORRECT: The files have only the expected number of GLCODE cells.")
 
+    def test_Default_20(self):
+        filenames = [
+            "OUTPUT Default\\1690203601050_1994364726 Minutes.xlsx",
+            "OUTPUT Default\\1690203601050_1994364726.xlsx"
+        ]
+        error_messages = []
+
+        warnings.simplefilter("ignore")
+
+        for filename in filenames:
+            try:
+                try:
+                    df = pd.read_excel(filename, sheet_name="Sheet1")
+                except Exception as e:
+                    error_messages.append(f"Failed to open file {filename}: {str(e)}")
+                    continue  # Skip to the next iteration
+                for index, row in df.iterrows():
+                    date_value = row["DATE"]
+                    if pd.isna(date_value) or not isinstance(date_value, str) or not date_value.strip():
+                        error_messages.append(f"Format Date incorrect in File: {filename}, Row: {index+2}")
+                    try:
+                        parse(date_value)
+                    except ValueError:
+                        error_messages.append(f"Format Date incorrect in File: {filename}, Row: {index+2}")
+            except Exception as e:
+                error_messages.append(f"An unexpected error occurred while processing {filename}: {str(e)}")
+
+        if len(error_messages) > 0:
+            error_message = "\n".join(error_messages)
+            self.fail(error_message)
+        else:
+            print("TEST 20 DEFAULT CORRECT: Column Date format is correct files 1690203601050_1994364726 Minutes and 1690203601050_1994364726")
+    
+    def test_Default_20_1(self):
+        filenames = [
+            "OUTPUT Default\\1690808400472_1671940182 Minutes.xlsx",
+            "OUTPUT Default\\1690808400472_1671940182.xlsx"
+        ]
+        error_messages = []
+
+        warnings.simplefilter("ignore")
+
+        for filename in filenames:
+            try:
+                try:
+                    df = pd.read_excel(filename, sheet_name="Sheet1")
+                except Exception as e:
+                    error_messages.append(f"Failed to open file {filename}: {str(e)}")
+                    continue  # Skip to the next iteration
+                for index, row in df.iterrows():
+                    date_value = row["DATE"]
+                    if pd.isna(date_value) or not isinstance(date_value, str) or not date_value.strip():
+                        error_messages.append(f"Format Date incorrect in File: {filename}, Row: {index+2}")
+                    try:
+                        parse(date_value)
+                    except ValueError:
+                        error_messages.append(f"Format Date incorrect in File: {filename}, Row: {index+2}")
+            except Exception as e:
+                error_messages.append(f"An unexpected error occurred while processing {filename}: {str(e)}")
+
+        if len(error_messages) > 0:
+            error_message = "\n".join(error_messages)
+            self.fail(error_message)
+        else:
+            print("TEST 20.1 DEFAULT CORRECT: Column Date format is correct in files 1690808400472_1671940182 Minutes and 1690808400472_1671940182.")
+
+    def test_default_21(self):
+        filenames = [
+            "OUTPUT Default\\1690808400472_1671940182 Minutes.xlsx",
+            "OUTPUT Default\\1690808400472_1671940182.xlsx"
+        ]
+        error_messages = []
+
+        warnings.simplefilter("ignore")
+
+        for filename in filenames:
+            try:
+                try:
+                    df = pd.read_excel(filename, sheet_name="Sheet1")
+                except Exception as e:
+                    error_messages.append(f"Failed to open file {filename}: {str(e)}")
+                    continue  # Skip to the next iteration
+                for index, row in df.iterrows():
+                    date_value = row["ENDDTM"]
+                    if pd.isna(date_value) or not isinstance(date_value, str) or not date_value.strip():
+                        error_messages.append(f"Format ENDDTM incorrect in File: {filename}, Row: {index+2}")
+                    elif date_value == "empty":
+                        error_messages.append(f"Empty cell found in ENDDTM column in File: {filename}, Row: {index+2}")
+                    try:
+                        parse(date_value)
+                    except ValueError:
+                        error_messages.append(f"Format ENDDTM incorrect in File: {filename}, Row: {index+2}")
+            except Exception as e:
+                error_messages.append(f"An unexpected error occurred while processing {filename}: {str(e)}")
+
+        if len(error_messages) > 0:
+            error_message = "\n".join(error_messages)
+            self.fail(error_message)
+        else:
+            print("TEST 21 DEFAULT CORRECT: Column ENDDTM format is correct in files")
 if __name__ == '__main__':
-
     unittest.main()

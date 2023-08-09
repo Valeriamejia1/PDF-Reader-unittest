@@ -163,5 +163,37 @@ class ExcelTest(unittest.TestCase):
         self.compare_excel_files("TestCasesUKGCommon\Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx", "OUTPUT UKGCommon\Martin Holiday Shifts 7.3 to 7.5.23.xlsx")
         print("TEST 6.2 UKGCommon CORRECT: Martin Holiday Shifts 7.3 to 7.5.23.xlsx data match the original version")
 
+    def test_UKGC_8(self):
+        filename = "TestCasesUKGCommon\Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx"
+        target_paycode = "RNTBS-Request / Not To Be Sched"
+        target_rows = [9, 10, 11, 133, 134]
+
+        try:
+            df = pd.read_excel(filename, sheet_name="Sheet1")
+            error_messages = {}
+
+            for row_num in target_rows:
+                if row_num <= df.shape[0]:
+                    paycode_value = df.at[row_num - 2, "PAYCODE"]
+                    if pd.isna(paycode_value) or paycode_value != target_paycode:
+                        if row_num not in error_messages:
+                            error_messages[row_num] = []
+                        if pd.isna(paycode_value):
+                            error_messages[row_num].append(f"Empty PAYCODE in Row: {row_num}")
+                        elif "RNTBS-Request" in paycode_value and "Not To Be Sched" not in paycode_value:
+                            error_messages[row_num].append(f"Incomplete PAYCODE in Row: {row_num}, PAYCODE: {paycode_value}")
+                        else:
+                            error_messages[row_num].append(f"Invalid PAYCODE in Row: {row_num}, PAYCODE: {paycode_value}")
+
+            if len(error_messages) > 0:
+                error_message = ""
+                for row_num, errors in error_messages.items():
+                    error_message += "\n".join(errors) + "\n"
+                self.fail(error_message)
+            else:
+                print(f"TEST 8 UKG Common CORRECT: The file {filename} column PAYCODE new PAYCODE is correct")
+        except Exception as e:
+            self.fail(f"An error occurred while processing {filename}: {str(e)}")
+            
 if __name__ == '__main__':
     unittest.main()
