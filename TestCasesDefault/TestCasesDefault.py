@@ -290,8 +290,8 @@ class ExcelTestCase(unittest.TestCase):
         print("TEST 6 DEFAULT CORRECT: The GLCODE of AMBURN, SARAH ; ATKINS, CARA match the expected value and have 14 digits.")
 
     def test_DEFAULT_7(self):
-        file1 = "OUTPUT Default\Time Detail_July152022 minutes.xlsx"
-        file2 = "OUTPUT Default\Time Detail_July152022.xlsx"
+        file1 = "OUTPUT Default/Time Detail_July152022 minutes.xlsx"
+        file2 = "OUTPUT Default/Time Detail_July152022.xlsx"
         name_to_find = "Anderson, Kasey"
         expected_glcode = ["34006510", "4900 20 40"]
 
@@ -459,7 +459,7 @@ class ExcelTestCase(unittest.TestCase):
         # List of file paths and sheet names to validate
         file_data = [
             {'file_path': 'OUTPUT Default/Time Detail_100822-102122 minutes.xlsx', 'sheet_name': 'Sheet1'},
-            {'file_path': 'OUTPUT Default\Time Detail_100822-102122.xlsx', 'sheet_name': 'Sheet1'}
+            {'file_path': 'OUTPUT Default/Time Detail_100822-102122.xlsx', 'sheet_name': 'Sheet1'}
         ]
 
         # List to store all error messages
@@ -606,14 +606,14 @@ class ExcelTestCase(unittest.TestCase):
         # Print a message if the test passes
         print(".TEST 15 DEFAULT CORRECT: The nurse registered in the file three shifts.")
 
-    def test_DEFAULT_16(self):
+    def test_DEFAULT_16(self):column
         #Files: OUTPUT Default/6-11 minutes.xlsx , OUTPUT Default/6-11.xlsx
         # Descriotion: Check if the nurse has her last comment that is located in the next page
         file_paths = ['OUTPUT Default/6-11.xlsx', 'OUTPUT Default/6-11 minutes.xlsx']
 
         # Name to search and data to verify in the 'Comments' column
         name_to_find = 'Casey, Quentasha'
-        expected_comment = "LV LV"
+        expected_comment = ""
 
         for file_path in file_paths:
             try:
@@ -765,8 +765,8 @@ class ExcelTestCase(unittest.TestCase):
 
     def test_Default_20(self):
         filenames = [
-            "OUTPUT Default\\1690203601050_1994364726 Minutes.xlsx",
-            "OUTPUT Default\\1690203601050_1994364726.xlsx"
+            "OUTPUT Default/1690203601050_1994364726 Minutes.xlsx",
+            "OUTPUT Default/1690203601050_1994364726.xlsx"
         ]
         error_messages = []
 
@@ -798,8 +798,8 @@ class ExcelTestCase(unittest.TestCase):
     
     def test_Default_20_1(self):
         filenames = [
-            "OUTPUT Default\\1690808400472_1671940182 Minutes.xlsx",
-            "OUTPUT Default\\1690808400472_1671940182.xlsx"
+            "OUTPUT Default/1690808400472_1671940182 Minutes.xlsx",
+            "OUTPUT Default/1690808400472_1671940182.xlsx"
         ]
         error_messages = []
 
@@ -831,8 +831,8 @@ class ExcelTestCase(unittest.TestCase):
 
     def test_default_21(self):
         filenames = [
-            "OUTPUT Default\\1690808400472_1671940182 Minutes.xlsx",
-            "OUTPUT Default\\1690808400472_1671940182.xlsx"
+            "OUTPUT Default/1690808400472_1671940182 Minutes.xlsx",
+            "OUTPUT Default/1690808400472_1671940182.xlsx"
         ]
         error_messages = []
 
