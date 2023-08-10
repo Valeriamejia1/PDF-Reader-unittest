@@ -22,7 +22,7 @@ class ExcelTest(unittest.TestCase):
         # Description: Check last shift is present
         # File: Martin ppe
         # Upload Excel file
-        excel_file = 'OUTPUT UKGCommon\Martin ppe 4.22.23.xlsx'
+        excel_file = 'OUTPUT UKGCommon/Martin ppe 4.22.23.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -100,16 +100,16 @@ class ExcelTest(unittest.TestCase):
     #Files: Martin ppe 4.22.23, martin b, time martin a ORIG
 
     def test_UKGC_3_1(self):
-        self.compare_excel_files("TestCasesUKGCommon/Martin ppe 4.22.23 ORIG.xlsx", "OUTPUT UKGCommon\Martin ppe 4.22.23.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon/Martin ppe 4.22.23 ORIG.xlsx", "OUTPUT UKGCommon/Martin ppe 4.22.23.xlsx")
         print("TEST 3.1 UKGCommon CORRECT: Martin ppe 4.22.23.xlsx data match the original version")
 
 
     def test_UKGC_3_2(self):
-        self.compare_excel_files("TestCasesUKGCommon/martin time a ORIG.xlsx", "OUTPUT UKGCommon\martin time a.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon/martin time a ORIG.xlsx", "OUTPUT UKGCommon/martin time a.xlsx")
         print("TEST 3.2 UKGCommon CORRECT: martin time a ORIG.xlsx data match the original version")
 
     def test_UKGC_4(self):
-        excel_file = "OUTPUT UKGCommon\Martin ppe 4.22.23.xlsx"
+        excel_file = "OUTPUT UKGCommon/Martin ppe 4.22.23.xlsx"
         sheet_name = "Sheet1"
         data = pd.read_excel(excel_file, sheet_name=sheet_name)
         name_column = "NAME"
@@ -138,7 +138,7 @@ class ExcelTest(unittest.TestCase):
         print("TEST 4 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the comments match the expected values")
 
     def test_UKGC_5(self):
-        excel_file = "OUTPUT UKGCommon\Martin ppe 4.22.23.xlsx"
+        excel_file = "OUTPUT UKGCommon/Martin ppe 4.22.23.xlsx"
         sheet_name = "Sheet1"
         data = pd.read_excel(excel_file, sheet_name=sheet_name)
         name_column = "NAME"
@@ -159,15 +159,15 @@ class ExcelTest(unittest.TestCase):
         print ("TEST 5 UKGCommon CORRECT: For AUGUSTE, LOURDJINA the GLCODES match those in the PDF")
 
     def test_UKGC_6_1(self):
-        self.compare_excel_files("TestCasesUKGCommon/martin b ORIG.xlsx", "OUTPUT UKGCommon\martin b.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon/martin b ORIG.xlsx", "OUTPUT UKGCommon/martin b.xlsx")
         print("TEST 6.1 UKGCommon CORRECT: martin b ORIG.xlsx data match the original version")
 
     def test_UKGC_6_2(self):
-        self.compare_excel_files("TestCasesUKGCommon\Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx", "OUTPUT UKGCommon\Martin Holiday Shifts 7.3 to 7.5.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon/Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx", "OUTPUT UKGCommon/Martin Holiday Shifts 7.3 to 7.5.xlsx")
         print("TEST 6.2 UKGCommon CORRECT: Martin Holiday Shifts 7.3 to 7.5.23.xlsx data match the original version")
 
     def test_UKGC_8(self):
-        filename = "TestCasesUKGCommon\Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx"
+        filename = "TestCasesUKGCommon/Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx"
         target_paycode = "RNTBS-Request / Not To Be Sched"
         target_rows = [9, 10, 11, 135, 134]
 
