@@ -606,7 +606,7 @@ class ExcelTestCase(unittest.TestCase):
         # Print a message if the test passes
         print(".TEST 15 DEFAULT CORRECT: The nurse registered in the file three shifts.")
 
-    def test_DEFAULT_16(self):column
+    def test_DEFAULT_16(self):
         #Files: OUTPUT Default/6-11 minutes.xlsx , OUTPUT Default/6-11.xlsx
         # Descriotion: Check if the nurse has her last comment that is located in the next page
         file_paths = ['OUTPUT Default/6-11.xlsx', 'OUTPUT Default/6-11 minutes.xlsx']
