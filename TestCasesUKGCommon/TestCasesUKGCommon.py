@@ -163,7 +163,7 @@ class ExcelTest(unittest.TestCase):
         print("TEST 6.1 UKGCommon CORRECT: martin b ORIG.xlsx data match the original version")
 
     def test_UKGC_6_2(self):
-        self.compare_excel_files("TestCasesUKGCommon/Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx", "OUTPUT UKGCommon/Martin Holiday Shifts 7.3 to 7.5.xlsx")
+        self.compare_excel_files("TestCasesUKGCommon/Martin Holiday Shifts 7.3 to 7.5.23 ORIG.xlsx", "OUTPUT UKGCommon/Martin Holiday Shifts 7.3 to 7.5.23.xlsx")
         print("TEST 6.2 UKGCommon CORRECT: Martin Holiday Shifts 7.3 to 7.5.23.xlsx data match the original version")
 
     def test_UKGC_8(self):
