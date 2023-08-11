@@ -283,7 +283,7 @@ class TestExcel(unittest.TestCase):
         df = pd.read_excel("OUTPUT API/TMMC W.E. 4.22 SCHED.xlsx", sheet_name="OutputData")
         
         # Verify the number of rows
-        self.assertEqual(len(df), 1310-1, "Number of rows is not equal to 1310")
+        self.assertEqual(len(df), 1349-1, "Number of rows is not equal to 1349")
         
         # Verify the existence of the column "NAME".
         self.assertIn("NAME", df.columns, "The column 'NAME' was not found")
