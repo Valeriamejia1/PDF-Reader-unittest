@@ -674,32 +674,33 @@ class ExcelTestCase(unittest.TestCase):
     def test_DEFAULT_18(self):
         file_paths = [
             "OUTPUT Default/06-11.xlsx",
-            "OUTPUT Default/06-11 minutes.xlsx"        ]
+            "OUTPUT Default/06-11 minutes.xlsx"
+        ]
         
         all_errors = []
         
         for file_path in file_paths:
-            xls = pd.ExcelFile(file_path)
-            sheet_names = xls.sheet_names
-            
-            for sheet_name in sheet_names:
-                df = pd.read_excel(xls, sheet_name)
+            with pd.ExcelFile(file_path) as xls:
+                sheet_names = xls.sheet_names
                 
-                if 'GLCODE' in df.columns:
-                    glcode_col = df['GLCODE']
-                    empty_cells = glcode_col.index[glcode_col.isnull()]
-                    for empty_cell_index in empty_cells:
-                        row_num = empty_cell_index + 2  # Adding 2 because DataFrame index starts from 0 and Excel rows start from 1
-                        error_msg = f"A blank cell was found in the GLCODE column of the file. '{file_path}' in row {row_num}."
+                for sheet_name in sheet_names:
+                    df = pd.read_excel(xls, sheet_name)
+                    
+                    if 'GLCODE' in df.columns:
+                        glcode_col = df['GLCODE']
+                        empty_cells = glcode_col.index[glcode_col.isnull()]
+                        for empty_cell_index in empty_cells:
+                            row_num = empty_cell_index + 2  # Adding 2 because DataFrame index starts from 0 and Excel rows start from 1
+                            error_msg = f"A blank cell was found in the GLCODE column of the file '{file_path}' in row {row_num}."
+                            all_errors.append(error_msg)
+                    else:
+                        error_msg = f"GLCODE column of the file was not found in '{file_path}'."
                         all_errors.append(error_msg)
-                else:
-                    error_msg = f"GLCODE column of the file was not found. '{file_path}'."
-                    all_errors.append(error_msg)
         
         if all_errors:
             self.fail('\n'.join(all_errors))
 
-        print(f"TEST 18 DEFAULT CORRECT: The GLCODE column is complete")
+        print("TEST 18 DEFAULT CORRECT: The GLCODE column is complete")
 
     def test_DEFAULT_19_1(self):
         file_paths = [
