@@ -712,21 +712,21 @@ class ExcelTestCase(unittest.TestCase):
         all_errors = []
         
         for file_path in file_paths:
-            xls = pd.ExcelFile(file_path)
-            sheet_names = xls.sheet_names
-            
-            for sheet_name in sheet_names:
-                df = pd.read_excel(xls, sheet_name)
+            with pd.ExcelFile(file_path) as xls:
+                sheet_names = xls.sheet_names
                 
-                if 'GLCODE' in df.columns:
-                    glcode_col = df['GLCODE']
-                    glcode_count = glcode_col.count()
-                    if glcode_count != expected_glcode_count:
-                        error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                for sheet_name in sheet_names:
+                    df = pd.read_excel(xls, sheet_name)
+                    
+                    if 'GLCODE' in df.columns:
+                        glcode_col = df['GLCODE']
+                        glcode_count = glcode_col.count()
+                        if glcode_count != expected_glcode_count:
+                            error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                            all_errors.append(error_msg)
+                    else:
+                        error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
                         all_errors.append(error_msg)
-                else:
-                    error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
-                    all_errors.append(error_msg)
 
         if all_errors:
             self.fail('\n'.join(all_errors))
@@ -743,21 +743,21 @@ class ExcelTestCase(unittest.TestCase):
         all_errors = []
         
         for file_path in file_paths:
-            xls = pd.ExcelFile(file_path)
-            sheet_names = xls.sheet_names
-            
-            for sheet_name in sheet_names:
-                df = pd.read_excel(xls, sheet_name)
+            with pd.ExcelFile(file_path) as xls:
+                sheet_names = xls.sheet_names
                 
-                if 'GLCODE' in df.columns:
-                    glcode_col = df['GLCODE']
-                    glcode_count = glcode_col.count()
-                    if glcode_count != expected_glcode_count:
-                        error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                for sheet_name in sheet_names:
+                    df = pd.read_excel(xls, sheet_name)
+                    
+                    if 'GLCODE' in df.columns:
+                        glcode_col = df['GLCODE']
+                        glcode_count = glcode_col.count()
+                        if glcode_count != expected_glcode_count:
+                            error_msg = f"The file: '{file_path}' has {glcode_count} cells with data in the GLCODE column, expected {expected_glcode_count}."
+                            all_errors.append(error_msg)
+                    else:
+                        error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
                         all_errors.append(error_msg)
-                else:
-                    error_msg = f"The GLCODE column was not found in the sheet '{sheet_name}' of the file '{file_path}'."
-                    all_errors.append(error_msg)
 
         if all_errors:
             self.fail('\n'.join(all_errors))
