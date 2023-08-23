@@ -6,7 +6,7 @@ class ExcelTest(unittest.TestCase):
     def test_UKGS_1(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('OUTPUT UKGSimplified/UKG Simplified Empty.xlsx', header=None)
+        df = pd.read_excel('OUTPUT UKGSimplified/UKG Simplified Empty.xlsx', header=None) 
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 

@@ -7,7 +7,7 @@ class TestExcel(unittest.TestCase):
     def test_UKGK_1(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('TestCasesUKGKronos/UKG Kronos empty.xlsx', header=None)
+        df = pd.read_excel('OUTPUT UKGKronos/UKG Kronos empty.xlsx', header=None)
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 
@@ -25,7 +25,7 @@ class TestExcel(unittest.TestCase):
         #File: Hannibal
 
             # Upload Excel file
-            excel_file = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
+            excel_file = 'OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx'
             df = pd.read_excel(excel_file)
        
             # Specify the search criteria
@@ -55,7 +55,7 @@ class TestExcel(unittest.TestCase):
     #Methods required for test_UKGK4
 
     def test_UKGS_4(self):
-        self.compare_excel_files("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx", "TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
+        self.compare_excel_files("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx", "OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx")
         print("TEST 4 UKGKronos CORRECT: Qualivis Time report PPE 062423.xlsx data match the original version")
 
     def generate_difference_message(self, original_df, new_df, original_file, new_file):
@@ -120,7 +120,7 @@ class TestExcel(unittest.TestCase):
             return False
 
     def test_UKGK_5(self):
-        path_file = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
+        path_file = 'OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx'
         sheet_namee = 'Sheet1'
         column = 'PRIMARY JOB'
 
@@ -131,7 +131,7 @@ class TestExcel(unittest.TestCase):
     def test_UKGK_6(self):
         # Load the Excel files into pandas DataFrames
         expected_df = pd.read_excel("TestCasesUKGKronos/Qualivis Time report PPE 062423 ORIG.xlsx")
-        actual_df = pd.read_excel("TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
+        actual_df = pd.read_excel("OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx")
 
         # Fill NaN values in both DataFrames with empty strings
         expected_df = expected_df.fillna('')
@@ -175,7 +175,7 @@ class TestExcel(unittest.TestCase):
             return False
 
     def test_UKGK_7(self):
-        pahtfile = 'TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx'
+        pahtfile = 'OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx'
 
         resultado = self.verified_names(pahtfile)
         if resultado:
@@ -184,7 +184,7 @@ class TestExcel(unittest.TestCase):
 
     def test_UKGK_8(self):
         # Load the Excel file into a pandas DataFrame
-        df = pd.read_excel("TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
+        df = pd.read_excel("OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx")
 
         # Check if row 555 contains the expected values
         expected_name = "MCCLAM, REBECCA"
@@ -206,7 +206,7 @@ class TestExcel(unittest.TestCase):
 
     def test_UKGK_9(self):
         # Load the Excel file into a pandas DataFrame
-        df = pd.read_excel("TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx")
+        df = pd.read_excel("OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx")
 
         # Check if row 731 contains the expected values
         expected_name = "PALMER, NATALIE"
@@ -232,7 +232,7 @@ class TestExcel(unittest.TestCase):
         expected_paycode = "OR-HRT CALL WE"
 
         # Load the Excel file into a pandas DataFrame
-        file_path = "TestCasesUKGKronos/Qualivis Time report PPE 062423.xlsx"
+        file_path = "OUTPUT UKGKronos/Qualivis Time report PPE 062423.xlsx"
         sheet_name = "Sheet1"
         df = pd.read_excel(file_path, sheet_name=sheet_name)
 

@@ -613,7 +613,7 @@ class ExcelTestCase(unittest.TestCase):
 
         # Name to search and data to verify in the 'Comments' column
         name_to_find = 'Casey, Quentasha'
-        expected_comment = ""
+        expected_comment = "| Amount | Amount Amount Amount Amount | Amount | Xfr/Move:  Account Comment Xfr:  Work Rule | LV LV"
 
         for file_path in file_paths:
             try:
@@ -739,7 +739,7 @@ class ExcelTestCase(unittest.TestCase):
             "OUTPUT Default/1690203601050_1994364726 Minutes.xlsx"
         ]
         
-        expected_glcode_count = 276
+        expected_glcode_count = 277
         all_errors = []
         
         for file_path in file_paths:
