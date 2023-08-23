@@ -3,6 +3,8 @@ import pandas as pd
 import re
 from dateutil.parser import parse
 import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 
 class ExcelTestCase(unittest.TestCase):
 

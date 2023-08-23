@@ -1,6 +1,9 @@
 import unittest
 import pandas as pd
 import string
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 
 class TestExcel(unittest.TestCase):
 
