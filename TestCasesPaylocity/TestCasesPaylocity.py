@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
-
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class ExcelTest(unittest.TestCase):
     #Methods required for test_UKGC_3

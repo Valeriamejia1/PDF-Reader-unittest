@@ -4,6 +4,7 @@ import re
 from dateutil.parser import parse
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 class ExcelTestCase(unittest.TestCase):

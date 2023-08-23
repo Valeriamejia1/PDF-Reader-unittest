@@ -3,7 +3,7 @@ import pandas as pd
 import string
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
-
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class TestExcel(unittest.TestCase):
 
