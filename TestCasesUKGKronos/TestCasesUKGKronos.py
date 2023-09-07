@@ -4,6 +4,7 @@ import string
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+import numpy as np
 
 class TestExcel(unittest.TestCase):
 

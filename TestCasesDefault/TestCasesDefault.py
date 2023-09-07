@@ -5,6 +5,7 @@ from dateutil.parser import parse
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+import numpy as np
 
 
 class ExcelTestCase(unittest.TestCase):
