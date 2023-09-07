@@ -44,7 +44,7 @@ class ExcelTest(unittest.TestCase):
         #Files: Blinder1
 
     def test_Paylocity_1(self):
-        self.compare_excel_files("TestCasesPaylocity/Binder1 ORIG.xlsx", "OUTPUT Paylocity/Binder1.xlsx")
+        self.compare_excel_files("TestCasesPaylocity/Binder1 ORIG.xlsx", "QA/Output Files/OUTPUT Paylocity/Binder1.xlsx")
         print("TEST 1 Paylocity CORRECT: Blinder1.xlsx data match the original version")
 
 
