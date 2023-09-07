@@ -10,7 +10,7 @@ class ExcelTest(unittest.TestCase):
     def test_UKGS_1(self):
 
         # Loads the Excel file into a DataFram
-        df = pd.read_excel('QA/Output Files/OUTPUT UKGSimplified/UKG Simplified Empty.xlsx', header=None) 
+        df = pd.read_excel('OUTPUT UKGSimplified/UKG Simplified Empty.xlsx', header=None) 
 
         # Gets the number of rows with data beyond the headers
         num_data_rows = len(df) - 1 
@@ -26,7 +26,7 @@ class ExcelTest(unittest.TestCase):
         # Description: Check last shift is present
         # File: TimeDetailsSorted_KEVCOL_2023-04-13T093000.546
         # Upload Excel file
-        excel_file = 'QA/Output Files/OUTPUT UKGSimplified/TimeDetailsSorted_KEVCOL.xlsx'
+        excel_file = 'OUTPUT UKGSimplified/TimeDetailsSorted_KEVCOL.xlsx'
         df = pd.read_excel(excel_file, sheet_name='Sheet1')
 
         # Specify the search criteria
@@ -105,11 +105,11 @@ class ExcelTest(unittest.TestCase):
     #Files: TimeDetailsSorted_KEVCOL, Qualvis TimeSheets 2023-06-03
     
     def test_UKGS_3_1(self):
-        self.compare_excel_files("TestCasesUKGSimplified/ORIG Files/TimeDetailsSorted_KEVCOL ORIG.xlsx", "QA/Output Files/OUTPUT UKGSimplified/TimeDetailsSorted_KEVCOL.xlsx")
+        self.compare_excel_files("TestCasesUKGSimplified/ORIG Files/TimeDetailsSorted_KEVCOL ORIG.xlsx", "OUTPUT UKGSimplified/TimeDetailsSorted_KEVCOL.xlsx")
         print("TEST 3.1 UKGSimplified CORRECT: TimeDetailsSorted_KEVCOL.xlsx data match the original version")
 
     def test_UKGS_3_2(self):
-        self.compare_excel_files("TestCasesUKGSimplified/ORIG Files/Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "QA/Output Files/OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
+        self.compare_excel_files("TestCasesUKGSimplified/ORIG Files/Qualvis TimeSheets 2023-06-03 ORIG.xlsx", "OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
         print("TEST 3.2 UKGSimplified CORRECT: Qualvis TimeSheets 2023-06-03.xlsx data match the original version")
 
     def test_UKGS_4(self):
@@ -118,7 +118,7 @@ class ExcelTest(unittest.TestCase):
         #File: Qualvis TimeSheets 2023-06-03.xlsx
 
         # Upload Excel file
-        df = pd.read_excel("QA/Output Files/OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
+        df = pd.read_excel("OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "PAYCODE" exists in the file
         if "PAYCODE" not in df.columns:
@@ -141,7 +141,7 @@ class ExcelTest(unittest.TestCase):
         #Files: Qualvis TimeSheets 2023-06-03.xlsx
 
         # Upload Excel file
-        df = pd.read_excel("QA/Output Files/OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
+        df = pd.read_excel("OUTPUT UKGSimplified/Qualvis TimeSheets 2023-06-03.xlsx")
 
         # Verify if the column "DATE" exists in the file
         if "DATE" not in df.columns:
